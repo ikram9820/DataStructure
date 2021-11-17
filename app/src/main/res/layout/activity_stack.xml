@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    tools:context="ik.tech.datastructure.StackActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteY="373dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/det"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Enter data"
+                android:inputType="number" />
+
+            <LinearLayout
+                android:id="@+id/stack"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/pushBtn"
+                        android:layout_width="match_parent"
+                        android:backgroundTint="@color/blue"
+                        android:textColor="@color/white"
+                        android:layout_height="wrap_content"
+                        android:onClick="push"
+                        android:text="push" />
+
+                    <Button
+                        android:id="@+id/popBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/blue"
+                        android:textColor="@color/white"
+                        android:onClick="pop"
+                        android:text="pop" />
+
+                    <Button
+                        android:id="@+id/peakBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/blue"
+                        android:textColor="@color/white"
+                        android:onClick="peak"
+                        android:text="peak" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/text_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/text_bg"
+                    android:paddingTop="10dp"
+                    android:text="Output"
+                    android:textColor="@color/green"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/datatext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/text_bg"
+                    android:paddingTop="15dp"
+                    android:text="....."
+                    android:textColor="@color/green"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/codeTextBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="showCode"
+                        android:text="show code"
+                        android:textColor="@color/black"
+                        app:backgroundTint="@color/white" />
+
+                    <Button
+                        android:id="@+id/algoTextBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:onClick="showAlgo"
+                        android:text="show algorithm"
+                        android:textColor="@color/black"
+                        app:backgroundTint="@color/white" />
+                </LinearLayout>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/codetext1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="-8dp"
+                        android:background="@drawable/text_bg"
+                        android:contextClickable="true"
+                        android:paddingTop="15dp"
+                        android:text="click on any blue button."
+                        android:textColor="@color/green"
+                        android:textSize="18sp"
+                        android:visibility="gone" />
+                </HorizontalScrollView>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/algotext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="-8dp"
+                        android:background="@drawable/text_bg"
+                        android:contextClickable="true"
+                        android:paddingTop="15dp"
+                        android:text="click on any blue button."
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:visibility="gone" />
+                </HorizontalScrollView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

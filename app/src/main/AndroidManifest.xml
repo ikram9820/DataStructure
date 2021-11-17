@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ik.tech.datastructure">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/dsa"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/dsa"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.DataStructure">
+
+        <activity android:name="ik.tech.datastructure.GraphActivity" android:parentActivityName="ik.tech.datastructure.MainActivity" android:label="Graph"/>
+        <activity android:name="ik.tech.datastructure.TreeActivity"  android:parentActivityName="ik.tech.datastructure.MainActivity" android:label="Tree" />
+        <activity android:name="ik.tech.datastructure.LinkedListActivity"  android:parentActivityName="ik.tech.datastructure.MainActivity" android:label="LinkedList" />
+        <activity android:name="ik.tech.datastructure.QueueActivity"  android:parentActivityName="ik.tech.datastructure.MainActivity" android:label="Queue"/>
+        <activity android:name="ik.tech.datastructure.StackActivity"  android:parentActivityName="ik.tech.datastructure.MainActivity" android:label="Stack"/>
+        <activity android:name="ik.tech.datastructure.ArrayActivity"  android:parentActivityName="ik.tech.datastructure.MainActivity" android:label="Array"/>
+
+        <activity android:name="ik.tech.datastructure.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

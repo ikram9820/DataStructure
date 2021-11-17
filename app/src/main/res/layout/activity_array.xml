@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    tools:context="ik.tech.datastructure.ArrayActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/edit_text_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/det"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/data_edit_text"
+                    android:inputType="number" />
+
+
+                <EditText
+                    android:id="@+id/iet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/index_edit_text"
+                    android:inputType="number"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/array"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/button"
+                        android:layout_width="135dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/blue"
+                        android:onClick="arrayInsertion"
+                        android:text="insert"
+                        android:textColor="@color/white" />
+
+                    <Spinner
+                        android:id="@+id/ais"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+
+                        android:entries="@array/insertion_choice_array"
+                        android:minWidth="195dp"
+
+                        android:pointerIcon="alias"
+                        android:tag="insSpin" />
+
+                    <Button
+                        android:id="@+id/button2"
+                        android:layout_width="135dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/blue"
+                        android:onClick="arrayDeletion"
+                        android:text="delete"
+                        android:textColor="@color/white" />
+
+                    <Spinner
+                        android:id="@+id/ads"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:entries="@array/deletion_choice"
+                        android:spinnerMode="dropdown"
+                        android:tag="delSpin" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/button4"
+                        android:layout_width="135dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/blue"
+                        android:onClick="arraySearch"
+                        android:text="Search"
+                        android:textColor="@color/white" />
+
+                    <Spinner
+                        android:id="@+id/ass"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:entries="@array/search_choice"
+                        android:tag="searSpin" />
+
+                    <Button
+                        android:id="@+id/button5"
+                        android:layout_width="135dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/blue"
+                        android:onClick="arraySort"
+                        android:text="sort"
+                        android:textColor="@color/white" />
+
+                    <Spinner
+                        android:id="@+id/asos"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:entries="@array/sort_choice"
+                        android:tag="sortSpin" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/blue"
+                    android:onClick="arrayGetAt"
+                    android:text="Get At"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/text_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/text_bg"
+                    android:paddingTop="10dp"
+                    android:text="Output"
+                    android:textColor="@color/green"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/adatatext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/text_bg"
+                    android:paddingTop="15dp"
+                    android:text="....."
+                    android:textColor="@color/green"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/codeTextBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="showCode"
+                        android:text="show code"
+                        android:textColor="@color/black"
+                        app:backgroundTint="@color/white" />
+
+                    <Button
+                        android:id="@+id/algoTextBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:onClick="showAlgo"
+                        android:text="show algorithm"
+                        android:textColor="@color/black"
+                        app:backgroundTint="@color/white" />
+                </LinearLayout>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/acodetext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="-8dp"
+                        android:background="@drawable/text_bg"
+                        android:contextClickable="true"
+                        android:paddingTop="15dp"
+                        android:text="click on any blue button."
+                        android:textColor="@color/green"
+                        android:textSize="18sp"
+                        android:visibility="gone" />
+                </HorizontalScrollView>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/aAlgoetext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="-8dp"
+                        android:background="@drawable/text_bg"
+                        android:contextClickable="true"
+                        android:paddingTop="15dp"
+                        android:text="click on any blue button."
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:visibility="gone" />
+                </HorizontalScrollView>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="3dp"
+    android:paddingLeft="3dp"
+    android:paddingRight="3dp"
+    tools:context="ik.tech.datastructure.MainActivity">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/arraylayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="3dp"
+                tools:layout_editor_absoluteY="3dp">
+
+                <ImageButton
+                    android:id="@+id/imag2eButton"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@android:color/transparent"
+                    android:onClick="arrayActivity"
+                    app:srcCompat="@drawable/array" />
+
+                <TextView
+                    android:id="@+id/text32View3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:onClick="arrayActivity"
+                    android:text="@string/array" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/stacklayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="3dp"
+                tools:layout_editor_absoluteY="3dp">
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:onClick="stackActivity"
+                    android:background="@android:color/transparent"
+                    app:srcCompat="@drawable/stack" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="stackActivity"
+                    android:text="@string/stack" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/queuelayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="3dp"
+                tools:layout_editor_absoluteY="3dp">
+
+                <ImageButton
+                    android:id="@+id/imageButton7"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@android:color/transparent"
+                    android:onClick="queueActivity"
+                    app:srcCompat="@drawable/queue" />
+
+                <TextView
+                    android:id="@+id/textVie21w3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="queueActivity"
+                    android:text="@string/queue" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linkedlistlayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="3dp"
+                tools:layout_editor_absoluteY="3dp">
+
+                <ImageButton
+                    android:id="@+id/imageButton8"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@android:color/transparent"
+                    android:onClick="linkedListActivity"
+                    app:srcCompat="@drawable/link" />
+
+                <TextView
+                    android:id="@+id/textView33"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="linkedListActivity"
+                    android:text="@string/linkedlist" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/treelayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="3dp"
+                tools:layout_editor_absoluteY="3dp">
+
+                <ImageButton
+                    android:id="@+id/imageButton9"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@android:color/transparent"
+                    android:onClick="treeActivity"
+                    app:srcCompat="@drawable/tree" />
+
+                <TextView
+                    android:id="@+id/text23View3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="treeActivity"
+                    android:text="@string/tree" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/graphlayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imageButton10"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@android:color/transparent"
+                    android:onClick="graphActivity"
+                    app:srcCompat="@drawable/graph" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="graphActivity"
+                    android:text="@string/graph" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
