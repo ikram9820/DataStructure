@@ -9,15 +9,34 @@
         android:roundIcon="@drawable/dsa"
         android:supportsRtl="true"
         android:theme="@style/Theme.DataStructure">
-
-        <activity android:name="ik.tech.datastructure.GraphActivity" android:parentActivityName="ik.tech.datastructure.MainActivity" android:label="Graph"/>
-        <activity android:name="ik.tech.datastructure.TreeActivity"  android:parentActivityName="ik.tech.datastructure.MainActivity" android:label="Tree" />
-        <activity android:name="ik.tech.datastructure.LinkedListActivity"  android:parentActivityName="ik.tech.datastructure.MainActivity" android:label="LinkedList" />
-        <activity android:name="ik.tech.datastructure.QueueActivity"  android:parentActivityName="ik.tech.datastructure.MainActivity" android:label="Queue"/>
-        <activity android:name="ik.tech.datastructure.StackActivity"  android:parentActivityName="ik.tech.datastructure.MainActivity" android:label="Stack"/>
-        <activity android:name="ik.tech.datastructure.ArrayActivity"  android:parentActivityName="ik.tech.datastructure.MainActivity" android:label="Array"/>
-
-        <activity android:name="ik.tech.datastructure.MainActivity">
+        <activity
+            android:name=".generic"
+            android:exported="false" />
+        <activity
+            android:name=".GraphActivity"
+            android:label="Graph"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".TreeActivity"
+            android:label="Tree"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".LinkedListActivity"
+            android:label="LinkedList"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".QueueActivity"
+            android:label="Queue"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".StackActivity"
+            android:label="Stack"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ArrayActivity"
+            android:label="Array"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

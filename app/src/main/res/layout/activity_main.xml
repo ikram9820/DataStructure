@@ -37,7 +37,8 @@
                     android:layout_height="70dp"
                     android:background="@android:color/transparent"
                     android:onClick="arrayActivity"
-                    app:srcCompat="@drawable/array" />
+                    app:srcCompat="@drawable/array"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <TextView
                     android:id="@+id/text32View3"
@@ -62,9 +63,10 @@
                     android:id="@+id/imageButton"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:onClick="stackActivity"
                     android:background="@android:color/transparent"
-                    app:srcCompat="@drawable/stack" />
+                    android:onClick="stackActivity"
+                    app:srcCompat="@drawable/stack"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <TextView
                     android:id="@+id/textView13"
@@ -90,7 +92,8 @@
                     android:layout_height="70dp"
                     android:background="@android:color/transparent"
                     android:onClick="queueActivity"
-                    app:srcCompat="@drawable/queue" />
+                    app:srcCompat="@drawable/queue"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <TextView
                     android:id="@+id/textVie21w3"
@@ -117,7 +120,8 @@
                     android:layout_height="70dp"
                     android:background="@android:color/transparent"
                     android:onClick="linkedListActivity"
-                    app:srcCompat="@drawable/link" />
+                    app:srcCompat="@drawable/link"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <TextView
                     android:id="@+id/textView33"
@@ -144,7 +148,8 @@
                     android:layout_height="70dp"
                     android:background="@android:color/transparent"
                     android:onClick="treeActivity"
-                    app:srcCompat="@drawable/tree" />
+                    app:srcCompat="@drawable/tree"
+                    tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
                 <TextView
                     android:id="@+id/text23View3"
@@ -168,7 +173,8 @@
                     android:layout_height="70dp"
                     android:background="@android:color/transparent"
                     android:onClick="graphActivity"
-                    app:srcCompat="@drawable/graph" />
+                    app:srcCompat="@drawable/graph"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <TextView
                     android:id="@+id/textView3"

@@ -4,8 +4,10 @@
         <item>show code on clicked button</item>
         <item>do operation on clicked button</item>
     </string-array>
+
     <string name="data_edit_text">enter data</string>
     <string name="index_edit_text">enter index</string>
+
     <string-array name="insertion_choice_array">
         <item>insert at first</item>
         <item>insert at last</item>
@@ -20,16 +22,22 @@
     </string-array>
 
     <string-array name="deletion_choice">
-        <item>delete specific item</item>
         <item>delete first</item>
         <item>delete last</item>
         <item>delete from specific index</item>
+        <item>delete specific item</item>
+    </string-array>
+
+    <string-array name="get_choice">
+        <item>get data from specific index</item>
 
     </string-array>
+
     <string-array name="search_choice">
         <item>linear search</item>
         <item>binary search</item>
     </string-array>
+
     <string-array name="sort_choice">
         <item>insertion sort</item>
         <item>selection sort</item>
@@ -436,22 +444,11 @@ public String deleteFirst(int [] arr, int nElement ){<br/><br/>
 "]]></string>
 
 
-
-
-    <string name="array"> <p ><b>ARRAY</b></p><![CDATA["
+    <string name="array"> <p><b>ARRAY</b></p><![CDATA["
 An array is a collection of items stored at contiguous memory locations.It can hold a fix number of items and these items should be of the same type."]]></string>
 
 
-
-
-
-
-
-
-
-
-
-<string name="stack"><p ><b>STACK</b></p><![CDATA["
+    <string name="stack"><p><b>STACK</b></p><![CDATA["
 Stack is an abstract data type that serves as a collection of elements, with two main principal operations: Push, which adds an element to the collection, and. Pop, which removes the most recently added element that was not yet removed."]]></string>
 
 
@@ -495,22 +492,8 @@ public String peak(int [] arr , int top) {<br/><br/>
 ]]></string>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    <string name="queue"><p ><b>QUEUE</b></p><![CDATA["
+    <string name="queue"><p><b>QUEUE</b></p><![CDATA["
 Queue is an abstract data type that serves as a collection of items in which only the earliest added item may be accessed. Basic operations are add (to the tail) or enqueue and delete (from the head) or dequeue."]]></string>
-
-
 
 
     <string name="deq_code"><![CDATA[
@@ -622,7 +605,6 @@ QINSERT(QUEUE,N,FRONT,REAR,ITEM)<br/>
 ]]></string>
 
 
-
     <string name="push_algo"><![CDATA[
 "
 PUSH(STACK, TOP, LEN, ITEM)<br/>
@@ -668,11 +650,7 @@ POP(STACK, TOP, ITEM)<br/>
 ]]></string>
 
 
-
-
-
-
-    <string name="linkedlist"><p ><b>LINKED LIST</b></p><![CDATA["
+    <string name="linkedlist"><p><b>LINKED LIST</b></p><![CDATA["
 A linked list is a linear collection of data elements whose order is not given by their physical placement in memory. Instead, each element points to the next. It is a data structure consisting of a collection of nodes which together represent a sequence."]]></string>
 
 
@@ -896,7 +874,6 @@ public String delete(node start , node end , int item) {<br/><br/>
 ]]></string>
 
 
-
     <string name="search_list_code"><![CDATA[
 "
 public node  search(node start , int item) {<br/><br/>
@@ -981,10 +958,6 @@ public void insertionSort(node start) {<br/><br/>
 
 "
 ]]></string>
-
-
-
-
 
 
     <string name="insertfirst_list_algo"><![CDATA[
@@ -1122,7 +1095,6 @@ N which contains the given ITEM of information.<br/><br/>
 ]]></string>
 
 
-
     <string name="search_list_algo"><![CDATA[
 "
  SEARCH( START, ITEM, LOC)<br/>
@@ -1165,18 +1137,8 @@ N which contains the given ITEM of information.<br/><br/>
 ]]></string>
 
 
-
-
-
-
-
-
-
-
-
-    <string name="tree"><p ><b>TREE</b></p><![CDATA["
+    <string name="tree"><p><b>TREE</b></p><![CDATA["
 A tree is a abstract data type that simulates a hierarchical tree structure, with a root value and subtrees of children with a parent node, represented as a set of linked nodes."]]></string>
-
 
 
     <string name="insertion_tree_code"><![CDATA[
@@ -1522,12 +1484,7 @@ Set 2. Return. <br/><br/>
     ]]></string>
 
 
-
-
-
-
-
-    <string name="graph"><p ><b>GRAPH</b></p> <![CDATA["
+    <string name="graph"><p><b>GRAPH</b></p> <![CDATA["
 A graph is an abstract data type that consists of V, a nonempty set of vertices (or nodes) and E, a set of edges. Each edge has either one or two vertices associated with it."]]></string>
 
     <string name="graph_code"> <![CDATA[
@@ -1743,4 +1700,13 @@ public class DiGraph {<br/><br/>
      \t\t  }//end getVertIndex()<br/>
 \t }//end DiGraph class<br/>
 " ]]></string>
+    <string name="title_activity_general">general</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

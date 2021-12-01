@@ -1,29 +1,32 @@
 package ik.tech.datastructure;
 
+import androidx.annotation.ArrayRes;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import ik.tech.datastructure.R;
 
 
 public class ArrayActivity extends AppCompatActivity {
 
-
     Array arr;
-    private Spinner insSpin,delSpin,sortSpin,searSpin;
-    private EditText data,index;
-    private TextView code,arrayData,algo;
-    private Button algoTextBtn,codeTextBtn;
+
+    private Spinner spinner;
+    private EditText dataEt,indexEt,questEt;
+    private TextView codeTv,outputTv,insertTv,deleteTv,getTv,sortTv,searchTv;
+    private Button enterBt,postBt,insertBt,deleteBt,searchBt,sortBt,javaBt,cBt,pythonBt,algoBt;
 
 
     @Override
@@ -34,330 +37,353 @@ public class ArrayActivity extends AppCompatActivity {
         Intent in = getIntent();
 
         arr=new Array(10);
-        algoTextBtn = (Button)findViewById(R.id.algoTextBtn);
-        codeTextBtn=(Button)findViewById(R.id.codeTextBtn);
-        insSpin= (Spinner)findViewById(R.id.ais);
-        delSpin= (Spinner)findViewById(R.id.ads);
-        sortSpin= (Spinner)findViewById(R.id.asos);
-        searSpin= (Spinner)findViewById(R.id.ass);
-        data=(EditText)findViewById(R.id.det);
 
-        index=(EditText)findViewById(R.id.iet);
-        code=(TextView)findViewById(R.id.acodetext);
-        algo = (TextView)findViewById(R.id.aAlgoetext);
-        arrayData=(TextView)findViewById(R.id.adatatext);
-
-        spinner();
-
-    }
+        codeTv=(TextView)findViewById(R.id.codeTv);
+        outputTv = (TextView)findViewById(R.id.outputTv);
+        insertTv = (TextView)findViewById(R.id.insertTv);
+        deleteTv = (TextView)findViewById(R.id.deleteTv);
+        getTv = (TextView)findViewById(R.id.getTv);
+        sortTv = (TextView)findViewById(R.id.sortTv);
+        searchTv = (TextView)findViewById(R.id.searchTv);
 
 
-    public void showData(){
-        data.setVisibility(View.VISIBLE);
-        index.setVisibility(View.GONE);
-    }
-    public void showIndex(){
-        data.setVisibility(View.GONE);
-        index.setVisibility(View.VISIBLE);
-    }
+        enterBt = (Button)findViewById(R.id.enterBt);
+        postBt=(Button)findViewById(R.id.postBt);
+        javaBt= (Button) findViewById(R.id.javaBt);
+        cBt= (Button) findViewById(R.id.cBt);
+        pythonBt= (Button) findViewById(R.id.pythonBt);
+        algoBt= (Button) findViewById(R.id.algoBt);
 
-    public  void showDataIndex(){
-        data.setVisibility(View.VISIBLE);
-        index.setVisibility(View.VISIBLE);
-    }
 
-    public void hideDataIndex(){
-        data.setVisibility(View.GONE);
-        index.setVisibility(View.GONE);
-    }
+        dataEt=(EditText)findViewById(R.id.dataEt);
+        indexEt=(EditText)findViewById(R.id.indexEt);
+        questEt=(EditText)findViewById(R.id.questEt);
 
-    public void spinner(){
-
-        insSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        spinner= (Spinner)findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String ch=insSpin.getSelectedItem().toString();
+                codeName = spinner.getSelectedItem().toString();
 
-                if (ch.equals("insert at specific index")) {
-                   showDataIndex();
-                } else{
-                   showData();
-                }
+                switch (codeName) {
+                    case "insert at specific index":
+                        showDataIndex();
+                        break;
+
+                    case "insert at first":
+                        showData();
+                        break;
+
+                    case "insert at last":
+                        showData();
+                        break;
+
+                    case "iinsert in sorted array":
+                        showData();
+                        break;
+
+                    case "delete from specific index":
+                        showIndex();
+                        break;
+
+                    case "delete first":
+                        hideDataIndex();
+                        break;
+
+                    case "delete last":
+                        hideDataIndex();
+                        break;
+                    case "delete specific item":
+                        showData();
+                        break;
+                    case "get data from specific index":
+                        showIndex();
+                        break;
+                    case "linear search":
+                        showData();
+                        break;
+                    case "binary search":
+                        showData();
+                        break;
+                    case "insertion sort":
+                        hideDataIndex();
+                        break;
+                    case "selection sort":
+                        hideDataIndex();
+                        break;
+                    case "bubble sort":
+                        hideDataIndex();
+                        break;
+
+                    case "quick sort":
+                        hideDataIndex();
+                        break;
+
+                    default:
+                        showData();
+                }//end switch
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Toast.makeText(ArrayActivity.this,"nothing is selected",Toast.LENGTH_SHORT).show();
             }
         });
 
-        delSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String ch=delSpin.getSelectedItem().toString();
-
-                if (ch.equals("delete from specific index")) {
-                  showIndex();
-                }
-                else if(ch.equals("delete specific item")){
-                   showData();
-                }
-                else{
-                  hideDataIndex();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(ArrayActivity.this,insSpin.getSelectedItem().toString(),Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        searSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               showData();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(ArrayActivity.this,insSpin.getSelectedItem().toString(),Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }//end spinner()
 
 
-    public void arrayInsertion(View view) {
-        algo.setText(Html.fromHtml(getString((R.string.insertion_algo))));
-        String ch = insSpin.getSelectedItem().toString();
-        if(ch.equals("insert at specific index")) {
-            code.setText(Html.fromHtml(getString((R.string.insert_at_code))));
-            try {
-                Toast.makeText(ArrayActivity.this,  arr.insert(Integer.parseInt(data.getText().toString()), Integer.parseInt(index.getText().toString())),
-                        Toast.LENGTH_SHORT).show();;
-            } catch (Exception e) {
-                showDataIndex();
-                Toast.makeText(ArrayActivity.this, "please enter data and index  \n" , Toast.LENGTH_SHORT).show();
-            }
+    }//end onCreate
 
-        }
-        else if(ch.equals("insert at first")) {
-            code.setText(Html.fromHtml(getString((R.string.insert_first_code))));
-            try {
-            Toast.makeText(ArrayActivity.this,  arr.insertFirst(Integer.parseInt(data.getText().toString())), Toast.LENGTH_SHORT).show();
-       } catch (Exception e) {
-                Toast.makeText(ArrayActivity.this, "please enter data  \n" , Toast.LENGTH_SHORT).show();
-         showData();
-            }
-        }
-        else if(ch.equals("insert at last")) {
 
-           code.setText(Html.fromHtml(getString((R.string.insert_last_code))));
-           try {
-            Toast.makeText(ArrayActivity.this, arr.insertLast(Integer.parseInt(data.getText().toString())), Toast.LENGTH_SHORT).show();
-       } catch (Exception e) {
-                Toast.makeText(ArrayActivity.this, "please enter data \n" , Toast.LENGTH_SHORT).show();
-           showData();
-            }
-        }
-        else if(ch.equals("insert in sorted array")) {
 
-            code.setText(Html.fromHtml(getString((R.string.insert_in_sorted_code))));
-            arr.insertionSort();
-            try {
-            Toast.makeText(ArrayActivity.this,  arr.insertInSorted(Integer.parseInt(data.getText().toString())), Toast.LENGTH_SHORT).show();
-          } catch (Exception e) {
-                Toast.makeText(ArrayActivity.this, "please enter data \n" , Toast.LENGTH_SHORT).show();
-          showData();
-            }
-        }
-        else
-            Toast.makeText(ArrayActivity.this,"\""+ch+"\"", Toast.LENGTH_SHORT).show();
 
-        arrayData.setText(arr.traverse());
-        data.setText("");
-        index.setText("");
-    }//end arrayInsertion()
+Integer index=null,data=null;
+    public void enterDataHandler(View view) {
+        data = Integer.parseInt(dataEt.getText().toString());
+        index = Integer.parseInt(indexEt.getText().toString());
+        Toast.makeText(this, "data inserted with "+codeName,Toast.LENGTH_SHORT).show();
+      if(data ==null && index ==null) {
+          Toast.makeText(this,"input fields are not filled",Toast.LENGTH_SHORT).show();
+      }
+          switch (codeName) {
+              case "insert at specific index":
 
-    public void arrayDeletion(View view) {
-        algo.setText(Html.fromHtml(getString((R.string.deletion_algo))));
-        String ch = delSpin.getSelectedItem().toString();
-        if(ch.equals("delete from specific index")) {
+                  Toast.makeText(this,arr.insert(data, index),Toast.LENGTH_SHORT).show();
+                  break;
 
-            code.setText(Html.fromHtml(getString((R.string.delete_at_code))));
-            try {
-                Toast.makeText(ArrayActivity.this,  arr.deleteAt(Integer.parseInt(index.getText().toString())),
-                        Toast.LENGTH_SHORT).show();;
-            } catch (Exception e) {
-                Toast.makeText(ArrayActivity.this, "please enter index \n", Toast.LENGTH_SHORT).show();
-           showIndex();
-            }
+              case "insert at first":
+                  Toast.makeText(this,arr.insertFirst(data),Toast.LENGTH_SHORT).show();
 
-        }
-        else if(ch.equals("delete first")) {
+                  break;
 
-            code.setText(Html.fromHtml(getString((R.string.delete_first_code))));
-            Toast.makeText(ArrayActivity.this,  arr.deleteFirst(), Toast.LENGTH_SHORT).show();
-       hideDataIndex();
-        }
-        else if(ch.equals("delete last")) {
+              case "insert at last":
+                  Toast.makeText(this,arr.insertLast(data),Toast.LENGTH_SHORT).show();
 
-            code.setText(Html.fromHtml(getString((R.string.delete_last_code))));
-            Toast.makeText(ArrayActivity.this, arr.deleteLast(), Toast.LENGTH_SHORT).show();
+                  break;
+
+              case "insert in sorted array":
+                  Toast.makeText(this,arr.insertInSorted(data),Toast.LENGTH_SHORT).show();
+
+                  break;
+
+              case "delete from specific index":
+                  Toast.makeText(this,arr.deleteAt(index),Toast.LENGTH_SHORT).show();
+
+                  break;
+
+              case "delete first":
+                  Toast.makeText(this,arr.deleteFirst(),Toast.LENGTH_SHORT).show();
+
+                  break;
+
+              case "delete last":
+                  Toast.makeText(this,arr.deleteLast(),Toast.LENGTH_SHORT).show();
+
+                  break;
+              case "delete specific item":
+                  Toast.makeText(this,arr.delete(data),Toast.LENGTH_SHORT).show();
+
+                  break;
+              case "get data from specific index":
+                  Toast.makeText(this,arr.getAt(index),Toast.LENGTH_SHORT).show();
+
+                  break;
+              case "linear search":
+                  Toast.makeText(this,arr.search(data),Toast.LENGTH_SHORT).show();
+
+                  break;
+              case "binary search":
+                  Toast.makeText(this,arr.bSearch(data),Toast.LENGTH_SHORT).show();
+
+                  break;
+              case "insertion sort":
+                  arr.insertionSort();
+                  Toast.makeText(this,"array is sorted with insertion sort",Toast.LENGTH_SHORT).show();
+
+                  break;
+              case "selection sort":
+                  arr.selectionSort();
+                  Toast.makeText(this,"array is sorted with selection sort",Toast.LENGTH_SHORT).show();
+
+                  break;
+              case "bubble sort":
+                  arr.bubbleSort();
+                  Toast.makeText(this,"array is sorted with bubble sort",Toast.LENGTH_SHORT).show();
+
+                  break;
+
+              case "quick sort":
+                  arr.quickSort(0, arr.getNelement());
+                  Toast.makeText(this,"array is sorted with quick sort",Toast.LENGTH_SHORT).show();
+
+                  break;
+
+              default:
+                  Toast.makeText(this,"this is error",Toast.LENGTH_SHORT).show();
+
+          }//end switch
+      outputTv.setText(arr.traverse());
+    }//end enterDataHandler
+
+
+    private String codeName="", language="java";
+    private final String ds="array";
+    String [] spinnerArray= null;
+    ArrayAdapter<String> spinnerArrayAdapter=null;
+
+    public void insertHandler(View view) {
+        setSpinnerData(R.array.insertion_choice_array);
+        setTextColor(insertTv);
+        enterBt.setText("insert");
+    }//end insertHandler
+
+    public void deleteHandler(View view) {
+        setSpinnerData(R.array.deletion_choice);
+        setTextColor(deleteTv);
+        enterBt.setText("delete");
+
+    }//end deleteHandler
+
+    public void getHandler(View view) {
+//        spinner.setVisibility(View.GONE);
+        setSpinnerData(R.array.get_choice);
+        setTextColor(getTv);
+        enterBt.setText("get");
+        showIndex();
+
+
+    }//end getHandler
+
+    public void sortHandler(View view) {
+        setSpinnerData(R.array.sort_choice);
+        setTextColor(sortTv);
+        enterBt.setText("sort");
         hideDataIndex();
-        }
-        else if(ch.equals("delete specific item")) {
+    }//end sortHandler
 
-            code.setText(Html.fromHtml(getString((R.string.delete_item_code))));
-          try {
-            Toast.makeText(ArrayActivity.this,  arr.delete(Integer.parseInt(data.getText().toString())), Toast.LENGTH_SHORT).show();
-         } catch (Exception e) {
-                Toast.makeText(ArrayActivity.this, "please enter data  \n" .toString(), Toast.LENGTH_SHORT).show();
-          showData();
-            }
-        }
-        else
-            Toast.makeText(ArrayActivity.this,"\""+ch+"\"", Toast.LENGTH_SHORT).show();
-
-        arrayData.setText(arr.traverse());
-        data.setText("");
-        index.setText("");
-    }
-
-    public void arrayGetAt(View view) {
-        algo.setText(Html.fromHtml(getString((R.string.get_at_algo))));
-        code.setText(Html.fromHtml(getString((R.string.get_at_code))));
-        if(index.getVisibility()!=view.VISIBLE){
-            data.setVisibility(view.GONE);
-            index.setVisibility(view.VISIBLE);
-        }
-        else {
-            try {
-                Toast.makeText(ArrayActivity.this, arr.getAt(Integer.parseInt(index.getText().toString())),
-                        Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                Toast.makeText(ArrayActivity.this, "please enter index\n"  , Toast.LENGTH_SHORT).show();
-            showIndex();
-            }
-
-            index.setText("");
-        }
-    }//end arrayGetAt()
-
-    public void arraySort(View view) {
-        String ch = sortSpin.getSelectedItem().toString();
-
-        if(ch.equals("insertion sort")) {
-            algo.setText(Html.fromHtml(getString((R.string.insert_algo))));
-            code.setText(Html.fromHtml(getString((R.string.insertion_sort_code))));
-            arr.insertionSort();
-            Toast.makeText(ArrayActivity.this, "array is sorted by insertion sort", Toast.LENGTH_SHORT).show();
-        }
-        else if(ch.equals("bubble sort")) {
-            algo.setText(Html.fromHtml(getString((R.string.bubble_algo))));
-            code.setText(Html.fromHtml(getString((R.string.bubble_sort_code))));
-            arr.bubbleSort();
-            Toast.makeText(ArrayActivity.this, "array is sorted by bubble sort", Toast.LENGTH_SHORT).show();
-        }
-        else if(ch.equals("selection sort")) {
-            algo.setText(Html.fromHtml(getString((R.string.selection_algo))));
-            code.setText(Html.fromHtml(getString((R.string.selection_sort_code))));
-            arr.selectionSort();
-            Toast.makeText(ArrayActivity.this, "array is sorted by selection sort", Toast.LENGTH_SHORT).show();
-        }
-        else if(ch.equals("quick sort")) {
-            algo.setText(Html.fromHtml(getString((R.string.quick_algo))));
-            code.setText(Html.fromHtml(getString((R.string.quick_sort_code))));
-            arr.quickSort( 0 , arr.getNelement()-1 );
-            Toast.makeText(ArrayActivity.this,"array is sorted by quick sort", Toast.LENGTH_SHORT).show();
-        }
-
-        else
-            Toast.makeText(ArrayActivity.this, "there is no such type of sort function", Toast.LENGTH_SHORT).show();
-        arrayData.setText(arr.traverse());
-
-    }//end arraySort()
-
-    public void arraySearch(View view) {
-        String ch = searSpin.getSelectedItem().toString();
-        if(ch.equals("linear search")) {
-            algo.setText(Html.fromHtml(getString((R.string.linear_algo))));
-            code.setText(Html.fromHtml(getString((R.string.linear_search_code))));
-            try {
-            Toast.makeText(ArrayActivity.this,  arr.search(Integer.parseInt(data.getText().toString())), Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(ArrayActivity.this, "please enter data and index  \n" .toString(), Toast.LENGTH_SHORT).show();
-      showData();
-        }
-        }
-        else if(ch.equals("binary search")) {
-            algo.setText(Html.fromHtml(getString((R.string.binary_algo))));
-            code.setText(Html.fromHtml(getString((R.string.binary_search_code))));
-            arr.insertionSort();
-            try {
-            Toast.makeText(ArrayActivity.this, arr.bSearch(Integer.parseInt(data.getText().toString())), Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(ArrayActivity.this, "please enter data and index  \n" .toString(), Toast.LENGTH_SHORT).show();
+    public void searchHandler(View view) {
+        setSpinnerData(R.array.search_choice);
+        setTextColor(searchTv);
+        enterBt.setText("search");
         showData();
-            }
-        }
-        arrayData.setText(arr.traverse());
-        data.setText("");
+    }//end searchHandler
+
+    public void setTextColor(TextView tv){
+        insertTv.setTextColor(getResources().getColor(R.color.black));
+        deleteTv.setTextColor(getResources().getColor(R.color.black));
+        sortTv.setTextColor(getResources().getColor(R.color.black));
+        getTv.setTextColor(getResources().getColor(R.color.black));
+        searchTv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextColor(getResources().getColor(R.color.blue));
+
+    }//end setTextColor
+
+    public void setSpinnerData(int choice){
+        spinnerArray = getResources().getStringArray(choice);
+        spinnerArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,spinnerArray);
+        spinner.setAdapter(spinnerArrayAdapter);
+    }//end setSpinnerData
+
+
+
+
+    public void javaCodeHandler(View view) {
+
+    }//end javaCodeHandler
+
+    public void cCodeHandler(View view) {
+
+    }//end cCodeHandler
+
+    public void pythonCodeHandler(View view) {
+
+    }//end pythonCodeHandler
+
+    public void algoHandler(View view) {
+
+    }//end algoHandler
+
+
+
+    public void postQuestHandler(View view) {
+
+    }//end postQuestHandler
+
+
+
+
+    public void showData(){
+        dataEt.setVisibility(View.VISIBLE);
+        indexEt.setVisibility(View.GONE);
+    }
+    public void showIndex(){
+        dataEt.setVisibility(View.GONE);
+        indexEt.setVisibility(View.VISIBLE);
+
+    }
+    public  void showDataIndex(){
+        dataEt.setVisibility(View.VISIBLE);
+        indexEt.setVisibility(View.VISIBLE);
+    }
+    public void hideDataIndex(){
+        dataEt.setVisibility(View.GONE);
+        indexEt.setVisibility(View.GONE);
     }
 
 
-    public void showCode(View view){
-        if(codeTextBtn.getText().equals("show code")) {
-
-            codeTextBtn.setText("hide code");
-            algoTextBtn.setText("show algorithm");
-            codeTextBtn.setBackgroundColor(getResources().getColor(R.color.blackLight));
-            codeTextBtn.setTextColor(getResources().getColor(R.color.white));
-
-            algoTextBtn.setBackgroundColor(getResources().getColor(R.color.white));
-            algoTextBtn.setTextColor(getResources().getColor(R.color.black));
-
-            algo.setVisibility(View.GONE);
-            code.setVisibility(View.VISIBLE);
-
-            return;
-        }
-
-        codeTextBtn.setBackgroundColor(getResources().getColor(R.color.white));
-        codeTextBtn.setText("show code");
 
 
-        codeTextBtn.setTextColor(getResources().getColor(R.color.black));
-
-        code.setVisibility(View.GONE);
-    }
-
-    public void showAlgo(View view){
-        if(algoTextBtn.getText().equals("show algorithm")) {
-
-            algoTextBtn.setText("hide algorithm");
-            codeTextBtn.setText("show code");
-
-            algoTextBtn.setBackgroundColor(getResources().getColor(R.color.blackLight));
-            algoTextBtn.setTextColor(getResources().getColor(R.color.white));
-
-            codeTextBtn.setBackgroundColor(getResources().getColor(R.color.white));
-            codeTextBtn.setTextColor(getResources().getColor(R.color.black));
-
-            code.setVisibility(View.GONE);
-            algo.setVisibility(View.VISIBLE);
-
-            return;
-        }
-
-        algoTextBtn.setBackgroundColor(getResources().getColor(R.color.white));
-        algoTextBtn.setText("show algorithm");
-
-
-        algoTextBtn.setTextColor(getResources().getColor(R.color.black));
-        algo.setVisibility(View.GONE);
-    }
-
+//    public void showCode(View view){
+//        if(codeTextBtn.getText().equals("show code")) {
+//
+//            codeTextBtn.setText("hide code");
+//            algoTextBtn.setText("show algorithm");
+//            codeTextBtn.setBackgroundColor(getResources().getColor(R.color.blackLight));
+//            codeTextBtn.setTextColor(getResources().getColor(R.color.white));
+//
+//            algoTextBtn.setBackgroundColor(getResources().getColor(R.color.white));
+//            algoTextBtn.setTextColor(getResources().getColor(R.color.black));
+//
+//            algo.setVisibility(View.GONE);
+//            code.setVisibility(View.VISIBLE);
+//
+//            return;
+//        }
+//
+//        codeTextBtn.setBackgroundColor(getResources().getColor(R.color.white));
+//        codeTextBtn.setText("show code");
+//
+//
+//        codeTextBtn.setTextColor(getResources().getColor(R.color.black));
+//
+//        code.setVisibility(View.GONE);
+//    }
+//
+//    public void showAlgo(View view){
+//        if(algoTextBtn.getText().equals("show algorithm")) {
+//
+//            algoTextBtn.setText("hide algorithm");
+//            codeTextBtn.setText("show code");
+//
+//            algoTextBtn.setBackgroundColor(getResources().getColor(R.color.blackLight));
+//            algoTextBtn.setTextColor(getResources().getColor(R.color.white));
+//
+//            codeTextBtn.setBackgroundColor(getResources().getColor(R.color.white));
+//            codeTextBtn.setTextColor(getResources().getColor(R.color.black));
+//
+//            code.setVisibility(View.GONE);
+//            algo.setVisibility(View.VISIBLE);
+//
+//            return;
+//        }
+//
+//        algoTextBtn.setBackgroundColor(getResources().getColor(R.color.white));
+//        algoTextBtn.setText("show algorithm");
+//
+//
+//        algoTextBtn.setTextColor(getResources().getColor(R.color.black));
+//        algo.setVisibility(View.GONE);
+//    }
+//
 
 
 }

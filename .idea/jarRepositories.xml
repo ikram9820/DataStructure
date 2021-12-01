@@ -31,5 +31,15 @@
       <option name="name" value="maven" />
       <option name="url" value="file:/$PROJECT_DIR$/../../../kalim%20ccq/AndroidStudioProjects/DataStructure/app/https%20:/jitpack.io" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven" />
+      <option name="name" value="maven" />
+      <option name="url" value="file:$PROJECT_DIR$/https%20:/jitpack.io" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven" />
+      <option name="name" value="maven" />
+      <option name="url" value="file:$PROJECT_DIR$/app/https%20:/jitpack.io" />
+    </remote-repository>
   </component>
 </project>
