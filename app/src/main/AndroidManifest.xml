@@ -10,9 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DataStructure">
         <activity
-            android:name=".generic"
-            android:exported="false" />
-        <activity
             android:name=".GraphActivity"
             android:label="Graph"
             android:parentActivityName=".MainActivity" />

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "351138686760",
+    "project_id": "datastructure-7fdc8",
+    "storage_bucket": "datastructure-7fdc8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351138686760:android:8417ed53e1362a3ef7921d",
+        "android_client_info": {
+          "package_name": "ik.tech.datastructure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "351138686760-pjhkk3jg3v49l4f0lr260n5opcs2i6ct.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTeETIJ6oPMYkYQOjnoOGB980ECGjXVEc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "351138686760-pjhkk3jg3v49l4f0lr260n5opcs2i6ct.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

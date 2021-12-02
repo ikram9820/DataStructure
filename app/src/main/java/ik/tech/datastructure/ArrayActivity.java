@@ -1,6 +1,7 @@
 package ik.tech.datastructure;
 
 import androidx.annotation.ArrayRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,15 +20,36 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 
 public class ArrayActivity extends AppCompatActivity {
 
+    FirebaseDatabase database;
+    DatabaseReference codes;
+    DatabaseReference users;
+    DatabaseReference questions;
+    DatabaseReference replies;
+
+
     Array arr;
 
+    private String codeName , language ;
+    private final String ds = "array";
+    private String codeId, code=".....";
+
+    String[] spinnerArray = null;
+    ArrayAdapter<String> spinnerArrayAdapter = null;
+
     private Spinner spinner;
-    private EditText dataEt,indexEt,questEt;
-    private TextView codeTv,outputTv,insertTv,deleteTv,getTv,sortTv,searchTv;
-    private Button enterBt,postBt,insertBt,deleteBt,searchBt,sortBt,javaBt,cBt,pythonBt,algoBt;
+    private EditText codeEt,dataEt, indexEt, questEt;
+    private TextView codeTv, outputTv, insertTv, deleteTv, getTv, sortTv, searchTv;
+    private Button enterBt, postBt, insertBt, deleteBt, searchBt, sortBt, javaBt, cBt, pythonBt, algoBt;
 
 
     @Override
@@ -36,35 +59,43 @@ public class ArrayActivity extends AppCompatActivity {
 
         Intent in = getIntent();
 
-        arr=new Array(10);
+        database = FirebaseDatabase.getInstance();
+        codes = database.getReference("codes");
+        users = database.getReference("users");
+        questions = database.getReference("questions");
+        replies = database.getReference("replies");
 
-        codeTv=(TextView)findViewById(R.id.codeTv);
-        outputTv = (TextView)findViewById(R.id.outputTv);
-        insertTv = (TextView)findViewById(R.id.insertTv);
-        deleteTv = (TextView)findViewById(R.id.deleteTv);
-        getTv = (TextView)findViewById(R.id.getTv);
-        sortTv = (TextView)findViewById(R.id.sortTv);
-        searchTv = (TextView)findViewById(R.id.searchTv);
+        arr = new Array(10);
+        codeName="";
+        language="java";
+
+        codeTv = (TextView) findViewById(R.id.codeTv);
+        outputTv = (TextView) findViewById(R.id.outputTv);
+        insertTv = (TextView) findViewById(R.id.insertTv);
+        deleteTv = (TextView) findViewById(R.id.deleteTv);
+        getTv = (TextView) findViewById(R.id.getTv);
+        sortTv = (TextView) findViewById(R.id.sortTv);
+        searchTv = (TextView) findViewById(R.id.searchTv);
 
 
-        enterBt = (Button)findViewById(R.id.enterBt);
-        postBt=(Button)findViewById(R.id.postBt);
-        javaBt= (Button) findViewById(R.id.javaBt);
-        cBt= (Button) findViewById(R.id.cBt);
-        pythonBt= (Button) findViewById(R.id.pythonBt);
-        algoBt= (Button) findViewById(R.id.algoBt);
+        enterBt = (Button) findViewById(R.id.enterBt);
+        postBt = (Button) findViewById(R.id.postBt);
+        javaBt = (Button) findViewById(R.id.javaBt);
+        cBt = (Button) findViewById(R.id.cBt);
+        pythonBt = (Button) findViewById(R.id.pythonBt);
+        algoBt = (Button) findViewById(R.id.algoBt);
 
+        codeEt = (EditText) findViewById(R.id.codeEt);
+        dataEt = (EditText) findViewById(R.id.dataEt);
+        indexEt = (EditText) findViewById(R.id.indexEt);
+        questEt = (EditText) findViewById(R.id.questEt);
 
-        dataEt=(EditText)findViewById(R.id.dataEt);
-        indexEt=(EditText)findViewById(R.id.indexEt);
-        questEt=(EditText)findViewById(R.id.questEt);
-
-        spinner= (Spinner)findViewById(R.id.spinner);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        spinner = (Spinner) findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 codeName = spinner.getSelectedItem().toString();
-
+                setCodeTvText();
                 switch (codeName) {
                     case "insert at specific index":
                         showDataIndex();
@@ -123,112 +154,115 @@ public class ArrayActivity extends AppCompatActivity {
                         showData();
                 }//end switch
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(ArrayActivity.this,"nothing is selected",Toast.LENGTH_SHORT).show();
+                Toast.makeText(ArrayActivity.this, "nothing is selected", Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
     }//end onCreate
 
 
+    Integer index = null, data = null;
 
 
-Integer index=null,data=null;
+
+
     public void enterDataHandler(View view) {
-        data = Integer.parseInt(dataEt.getText().toString());
-        index = Integer.parseInt(indexEt.getText().toString());
-        Toast.makeText(this, "data inserted with "+codeName,Toast.LENGTH_SHORT).show();
-      if(data ==null && index ==null) {
-          Toast.makeText(this,"input fields are not filled",Toast.LENGTH_SHORT).show();
-      }
-          switch (codeName) {
-              case "insert at specific index":
+        try {
+            this.data = Integer.parseInt(dataEt.getText().toString());
+        } catch (Exception e) {
+            Log.w(null, "please enter data in text filed");
+        }
+        try {
+            this.index = Integer.parseInt(indexEt.getText().toString());
+        } catch (Exception e) {
+            Log.e(null, "please enter index in text filed");
+        }
 
-                  Toast.makeText(this,arr.insert(data, index),Toast.LENGTH_SHORT).show();
-                  break;
+        switch (codeName) {
+            case "insert at specific index":
 
-              case "insert at first":
-                  Toast.makeText(this,arr.insertFirst(data),Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, arr.insert(data, index), Toast.LENGTH_SHORT).show();
+                break;
 
-                  break;
+            case "insert at first":
+                Toast.makeText(this, arr.insertFirst(data), Toast.LENGTH_SHORT).show();
 
-              case "insert at last":
-                  Toast.makeText(this,arr.insertLast(data),Toast.LENGTH_SHORT).show();
+                break;
 
-                  break;
+            case "insert at last":
+                Toast.makeText(this, arr.insertLast(data), Toast.LENGTH_SHORT).show();
 
-              case "insert in sorted array":
-                  Toast.makeText(this,arr.insertInSorted(data),Toast.LENGTH_SHORT).show();
+                break;
 
-                  break;
+            case "insert in sorted array":
+                Toast.makeText(this, arr.insertInSorted(data), Toast.LENGTH_SHORT).show();
 
-              case "delete from specific index":
-                  Toast.makeText(this,arr.deleteAt(index),Toast.LENGTH_SHORT).show();
+                break;
 
-                  break;
+            case "delete from specific index":
+                Toast.makeText(this, arr.deleteAt(index), Toast.LENGTH_SHORT).show();
 
-              case "delete first":
-                  Toast.makeText(this,arr.deleteFirst(),Toast.LENGTH_SHORT).show();
+                break;
 
-                  break;
+            case "delete first":
+                Toast.makeText(this, arr.deleteFirst(), Toast.LENGTH_SHORT).show();
 
-              case "delete last":
-                  Toast.makeText(this,arr.deleteLast(),Toast.LENGTH_SHORT).show();
+                break;
 
-                  break;
-              case "delete specific item":
-                  Toast.makeText(this,arr.delete(data),Toast.LENGTH_SHORT).show();
+            case "delete last":
+                Toast.makeText(this, arr.deleteLast(), Toast.LENGTH_SHORT).show();
 
-                  break;
-              case "get data from specific index":
-                  Toast.makeText(this,arr.getAt(index),Toast.LENGTH_SHORT).show();
+                break;
+            case "delete specific item":
+                Toast.makeText(this, arr.delete(data), Toast.LENGTH_SHORT).show();
 
-                  break;
-              case "linear search":
-                  Toast.makeText(this,arr.search(data),Toast.LENGTH_SHORT).show();
+                break;
+            case "get data from specific index":
+                Toast.makeText(this, arr.getAt(index), Toast.LENGTH_SHORT).show();
 
-                  break;
-              case "binary search":
-                  Toast.makeText(this,arr.bSearch(data),Toast.LENGTH_SHORT).show();
+                break;
+            case "linear search":
+                Toast.makeText(this, arr.search(data), Toast.LENGTH_SHORT).show();
 
-                  break;
-              case "insertion sort":
-                  arr.insertionSort();
-                  Toast.makeText(this,"array is sorted with insertion sort",Toast.LENGTH_SHORT).show();
+                break;
+            case "binary search":
+                Toast.makeText(this, arr.bSearch(data), Toast.LENGTH_SHORT).show();
 
-                  break;
-              case "selection sort":
-                  arr.selectionSort();
-                  Toast.makeText(this,"array is sorted with selection sort",Toast.LENGTH_SHORT).show();
+                break;
+            case "insertion sort":
+                arr.insertionSort();
+                Toast.makeText(this, "array is sorted with insertion sort", Toast.LENGTH_SHORT).show();
 
-                  break;
-              case "bubble sort":
-                  arr.bubbleSort();
-                  Toast.makeText(this,"array is sorted with bubble sort",Toast.LENGTH_SHORT).show();
+                break;
+            case "selection sort":
+                arr.selectionSort();
+                Toast.makeText(this, "array is sorted with selection sort", Toast.LENGTH_SHORT).show();
 
-                  break;
+                break;
+            case "bubble sort":
+                arr.bubbleSort();
+                Toast.makeText(this, "array is sorted with bubble sort", Toast.LENGTH_SHORT).show();
 
-              case "quick sort":
-                  arr.quickSort(0, arr.getNelement());
-                  Toast.makeText(this,"array is sorted with quick sort",Toast.LENGTH_SHORT).show();
+                break;
 
-                  break;
+            case "quick sort":
+                arr.quickSort(0, arr.getNelement());
+                Toast.makeText(this, "array is sorted with quick sort", Toast.LENGTH_SHORT).show();
 
-              default:
-                  Toast.makeText(this,"this is error",Toast.LENGTH_SHORT).show();
+                break;
 
-          }//end switch
-      outputTv.setText(arr.traverse());
+            default:
+                Toast.makeText(this, "this is error", Toast.LENGTH_SHORT).show();
+
+        }//end switch
+        this.outputTv.setText(arr.traverse());
     }//end enterDataHandler
 
 
-    private String codeName="", language="java";
-    private final String ds="array";
-    String [] spinnerArray= null;
-    ArrayAdapter<String> spinnerArrayAdapter=null;
 
     public void insertHandler(View view) {
         setSpinnerData(R.array.insertion_choice_array);
@@ -240,15 +274,13 @@ Integer index=null,data=null;
         setSpinnerData(R.array.deletion_choice);
         setTextColor(deleteTv);
         enterBt.setText("delete");
-
     }//end deleteHandler
 
     public void getHandler(View view) {
-//        spinner.setVisibility(View.GONE);
         setSpinnerData(R.array.get_choice);
         setTextColor(getTv);
         enterBt.setText("get");
-        showIndex();
+
 
 
     }//end getHandler
@@ -257,79 +289,135 @@ Integer index=null,data=null;
         setSpinnerData(R.array.sort_choice);
         setTextColor(sortTv);
         enterBt.setText("sort");
-        hideDataIndex();
+
     }//end sortHandler
 
     public void searchHandler(View view) {
         setSpinnerData(R.array.search_choice);
         setTextColor(searchTv);
         enterBt.setText("search");
-        showData();
+
     }//end searchHandler
 
-    public void setTextColor(TextView tv){
+    public void setTextColor(TextView tv) {
         insertTv.setTextColor(getResources().getColor(R.color.black));
         deleteTv.setTextColor(getResources().getColor(R.color.black));
         sortTv.setTextColor(getResources().getColor(R.color.black));
         getTv.setTextColor(getResources().getColor(R.color.black));
         searchTv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextColor(getResources().getColor(R.color.blue));
-
     }//end setTextColor
 
-    public void setSpinnerData(int choice){
+    public void setSpinnerData(int choice) {
         spinnerArray = getResources().getStringArray(choice);
-        spinnerArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,spinnerArray);
+        spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
         spinner.setAdapter(spinnerArrayAdapter);
     }//end setSpinnerData
 
 
-
-
     public void javaCodeHandler(View view) {
+        handleLangBt(this.javaBt, "java");
+
 
     }//end javaCodeHandler
 
     public void cCodeHandler(View view) {
+        handleLangBt(this.cBt, "c++");
 
     }//end cCodeHandler
 
     public void pythonCodeHandler(View view) {
-
+        handleLangBt(this.pythonBt, "python");
     }//end pythonCodeHandler
 
     public void algoHandler(View view) {
-
+        handleLangBt(this.algoBt, "algo");
     }//end algoHandler
 
 
+    public void handleLangBt(Button bt, String lang) {
+        this.javaBt.setTextColor(getResources().getColor(R.color.black));
+        this.cBt.setTextColor(getResources().getColor(R.color.black));
+        this.pythonBt.setTextColor(getResources().getColor(R.color.black));
+        this.algoBt.setTextColor(getResources().getColor(R.color.black));
+        bt.setTextColor(getResources().getColor(R.color.blue));
+        this.language = lang;
+        setCodeTvText();
+
+    }//end setTextColor
+
+
+
+    public void editCode(View view) {
+        code=codeTv.getText().toString();
+        codeTv.setVisibility(View.GONE);
+        codeEt.setVisibility(View.VISIBLE);
+        codeEt.setText(code);
+    }//end editCode
+    public void updateCode(View view) {
+        code = codeEt.getText().toString();
+
+        CodeModel codeModel = new CodeModel(codeId,code);
+        codes.child(codeId).setValue(codeModel);
+
+        codeTv.setText(code);
+        codeTv.setVisibility(View.VISIBLE);
+        codeEt.setVisibility(View.GONE);
+
+    }//end updateCode
+
+    public void setCodeTvText(){
+        String codeNameWithoutSpace;
+        codeNameWithoutSpace = this.codeName.replaceAll("\\s","").trim();
+        codeId=(this.language+ this.ds + codeNameWithoutSpace).trim();
+
+        Query checkCode = codes.orderByChild("codeId").equalTo(codeId);
+
+        checkCode.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    String codeFromDb=snapshot.child(codeId).child("code").getValue(String.class);
+                    codeTv.setText(codeFromDb);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(ArrayActivity.this,"no such code exist "+error.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }//end setCodeTvText
 
     public void postQuestHandler(View view) {
 
     }//end postQuestHandler
 
-
-
-
-    public void showData(){
-        dataEt.setVisibility(View.VISIBLE);
-        indexEt.setVisibility(View.GONE);
-    }
-    public void showIndex(){
-        dataEt.setVisibility(View.GONE);
-        indexEt.setVisibility(View.VISIBLE);
-
-    }
-    public  void showDataIndex(){
-        dataEt.setVisibility(View.VISIBLE);
-        indexEt.setVisibility(View.VISIBLE);
-    }
-    public void hideDataIndex(){
-        dataEt.setVisibility(View.GONE);
-        indexEt.setVisibility(View.GONE);
+    public void showData() {
+        this.dataEt.setVisibility(View.VISIBLE);
+        this.indexEt.setVisibility(View.GONE);
     }
 
+    public void showIndex() {
+        this.dataEt.setVisibility(View.GONE);
+        this.indexEt.setVisibility(View.VISIBLE);
 
+    }
+
+    public void showDataIndex() {
+        this.dataEt.setVisibility(View.VISIBLE);
+        this.indexEt.setVisibility(View.VISIBLE);
+    }
+
+    public void hideDataIndex() {
+        this.dataEt.setVisibility(View.GONE);
+        this.indexEt.setVisibility(View.GONE);
+    }
+
+
+}//end ArrayActivity
 
 
 //    public void showCode(View view){
@@ -383,7 +471,3 @@ Integer index=null,data=null;
 //        algoTextBtn.setTextColor(getResources().getColor(R.color.black));
 //        algo.setVisibility(View.GONE);
 //    }
-//
-
-
-}

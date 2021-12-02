@@ -197,10 +197,12 @@
 
                     android:text="enter"
                     android:textStyle="bold" />
+
             </LinearLayout>
 
+
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/textView18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -210,6 +212,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
 
             <TextView
                 android:id="@+id/outputTv"
@@ -235,10 +238,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
-                    android:text="JAVA"
                     android:onClick="javaCodeHandler"
+                    android:text="JAVA"
 
-                    android:textColor="@color/black"
+                    android:textColor="@color/blue"
 
                     android:textStyle="bold" />
 
@@ -248,9 +251,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
-                    android:text="C++"
-
                     android:onClick="cCodeHandler"
+
+                    android:text="C++"
 
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -260,8 +263,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
-                    android:text="Python"
                     android:onClick="pythonCodeHandler"
+                    android:text="Python"
 
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -272,34 +275,58 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
-                    android:text="Algo"
                     android:onClick="algoHandler"
+                    android:text="Algo"
 
                     android:textColor="@color/black"
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-
                 android:layout_weight="1"
-                android:text="Code"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight="1"
+                    android:text="Code"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/editCodeBt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="updateCode"
+                    android:text="update" />
+
+                <Button
+                    android:id="@+id/editCodeBt2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="editCode"
+                    android:text="edit" />
+            </LinearLayout>
+
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    weighti
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/codeTv"
@@ -312,7 +339,16 @@
                         android:text="...."
                         android:textColor="@color/white"
                         android:textSize="20sp" />
-                </RelativeLayout>
+
+                    <EditText
+                        android:id="@+id/codeEt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="textMultiLine|textPersonName"
+                        android:visibility="gone"
+                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                </LinearLayout>
             </HorizontalScrollView>
 
             <LinearLayout
