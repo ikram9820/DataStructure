@@ -10,6 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,6 +22,8 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,21 +34,27 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ArrayActivity extends AppCompatActivity {
 
-    FirebaseDatabase database;
-    DatabaseReference codes;
-    DatabaseReference users;
-    DatabaseReference questions;
-    DatabaseReference replies;
+
+    private static final String TAG ="ik.Array Activity" ;
+    private static FirebaseDatabase database;
+    private DatabaseReference codes;
+    private DatabaseReference users;
+    private DatabaseReference questions;
+    private DatabaseReference replies;
+    static {
+        database = FirebaseDatabase.getInstance();
+        database.setPersistenceEnabled(true);
+        }
 
 
-    Array arr;
+    private Array arr;
 
     private String codeName , language ;
     private final String ds = "array";
     private String codeId, code=".....";
 
-    String[] spinnerArray = null;
-    ArrayAdapter<String> spinnerArrayAdapter = null;
+    private String[] spinnerArray = null;
+    private ArrayAdapter<String> spinnerArrayAdapter = null;
 
     private Spinner spinner;
     private EditText codeEt,dataEt, indexEt, questEt;
@@ -54,13 +64,17 @@ public class ArrayActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_array);
 
+
         Intent in = getIntent();
 
-        database = FirebaseDatabase.getInstance();
+
         codes = database.getReference("codes");
+        codes.keepSynced(true);
         users = database.getReference("users");
         questions = database.getReference("questions");
         replies = database.getReference("replies");
@@ -175,11 +189,13 @@ public class ArrayActivity extends AppCompatActivity {
             this.data = Integer.parseInt(dataEt.getText().toString());
         } catch (Exception e) {
             Log.w(null, "please enter data in text filed");
+            return;
         }
         try {
             this.index = Integer.parseInt(indexEt.getText().toString());
         } catch (Exception e) {
             Log.e(null, "please enter index in text filed");
+            return;
         }
 
         switch (codeName) {
@@ -334,7 +350,6 @@ public class ArrayActivity extends AppCompatActivity {
         handleLangBt(this.algoBt, "algo");
     }//end algoHandler
 
-
     public void handleLangBt(Button bt, String lang) {
         this.javaBt.setTextColor(getResources().getColor(R.color.black));
         this.cBt.setTextColor(getResources().getColor(R.color.black));
@@ -347,38 +362,40 @@ public class ArrayActivity extends AppCompatActivity {
     }//end setTextColor
 
 
-
-    public void editCode(View view) {
-        code=codeTv.getText().toString();
-        codeTv.setVisibility(View.GONE);
-        codeEt.setVisibility(View.VISIBLE);
-        codeEt.setText(code);
-    }//end editCode
     public void updateCode(View view) {
+
         code = codeEt.getText().toString();
 
         CodeModel codeModel = new CodeModel(codeId,code);
-        codes.child(codeId).setValue(codeModel);
+        codes.child(codeId).setValue(codeModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                setCodeTvText();
+                Log.e(TAG,"value is set to database ");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(ArrayActivity.this,"value is not set to database",Toast.LENGTH_SHORT);
+                Log.e(TAG,e.getMessage());
+            }
+        });
 
-        codeTv.setText(code);
-        codeTv.setVisibility(View.VISIBLE);
-        codeEt.setVisibility(View.GONE);
+
 
     }//end updateCode
 
     public void setCodeTvText(){
-        String codeNameWithoutSpace;
-        codeNameWithoutSpace = this.codeName.replaceAll("\\s","").trim();
+        String codeNameWithoutSpace= this.codeName.replaceAll("\\s","");
         codeId=(this.language+ this.ds + codeNameWithoutSpace).trim();
 
-        Query checkCode = codes.orderByChild("codeId").equalTo(codeId);
-
-        checkCode.addListenerForSingleValueEvent(new ValueEventListener() {
+        codes.child(codeId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
-                    String codeFromDb=snapshot.child(codeId).child("code").getValue(String.class);
+                    String codeFromDb=snapshot.child("code").getValue(String.class);
                     codeTv.setText(codeFromDb);
+                    codeEt.setText(codeFromDb);
                 }
             }
 

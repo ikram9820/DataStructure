@@ -308,13 +308,6 @@
                     android:onClick="updateCode"
                     android:text="update" />
 
-                <Button
-                    android:id="@+id/editCodeBt2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="editCode"
-                    android:text="edit" />
             </LinearLayout>
 
 
@@ -346,7 +339,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:inputType="textMultiLine|textPersonName"
-                        android:visibility="gone"
                         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
                 </LinearLayout>
             </HorizontalScrollView>
