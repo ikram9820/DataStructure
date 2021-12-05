@@ -9,9 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,32 +27,45 @@ public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseDatabase database;
     private DatabaseReference users;
+    private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
         database = FirebaseDatabase.getInstance();
-
+        auth = FirebaseAuth.getInstance();
         users=database.getReference("users");
+
+        username =(TextInputLayout) findViewById(R.id.username);
+        email =(TextInputLayout) findViewById(R.id.email);
+        password =(TextInputLayout) findViewById(R.id.password);
+        rePassword =(TextInputLayout) findViewById(R.id.rePassword);
 
     }
 
+    public Boolean isWhiteSpace(String uname){
+        for(int i=0;i<uname.length();i++){
+            if(Character.isWhitespace(uname.charAt(i)))
+                return true;
+        }
+        return false;
+    }
     public Boolean validateUsername(){
         String username= this.username.getEditText().getText().toString().trim();
-        String spaces = "(?=\\s+$)";
+
         if(username.isEmpty()){
             this.username.setError("field cannot be empty");
             return false;
         }
-        else if(!username.matches(spaces)){
+        else if(isWhiteSpace(username)){
             this.username.setError("white spaces are not allowed");
             return false;
         }
-//        else if(isUserAvailable(username)){
-//            this.username.setError("The username is exist");
-//            return false;
-//        }
+        else if(isUserAvailable(username)){
+            this.username.setError("The username is exist");
+            return false;
+        }
         else{
             this.username.setError(null);
             return true;
@@ -83,7 +100,7 @@ public class SignUpActivity extends AppCompatActivity {
             return false;
         }
         else{
-            this.username.setError(null);
+            this.password.setError(null);
             return true;
         }
     }//end validate Password
@@ -92,68 +109,91 @@ public class SignUpActivity extends AppCompatActivity {
         String rePassword= this.rePassword.getEditText().getText().toString().trim();
         String password= this.password.getEditText().getText().toString().trim();
         if(rePassword.isEmpty()){
-            this.username.setError("field cannot be empty");
+            this.rePassword.setError("field cannot be empty");
             return false;
         }
         else if(!password.equals(rePassword)){
-            this.username.setError("The repeat password can not be different");
+            this.rePassword.setError("The password can not be different");
             return false;
         }
         else{
-            this.username.setError(null);
+            this.rePassword.setError(null);
             return true;
         }
     }//end validateRePassword
 
     boolean isUserAvailable;
-//    public Boolean isUserAvailable(String uname){
-//
-//            this.users.child(uname).addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    if(snapshot.exists())
-//                        isUserAvailable=true;
-//                    else
-//                        isUserAvailable =false;
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//                    Toast.makeText(SignUpActivity.this,"Database error \n"+error.getMessage(),Toast.LENGTH_SHORT).show();
-//
-//                }
-//            });
-//        return isUserAvailable;
-//    }//end isUserAvailable
+    public Boolean isUserAvailable(String uname){
+
+            this.users.child(uname).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists())
+                        isUserAvailable=true;
+                    else
+                        isUserAvailable =false;
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(SignUpActivity.this,"Database error \n"+error.getMessage(),Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        return isUserAvailable;
+    }//end isUserAvailable
 
 
 
 
     public void signUp(View view) {
-        if(!(validateEmail() && validatePassword() && validateRePassword() && validateUsername()))
+        if(!(validateEmail() & validatePassword() & validateRePassword() & validateUsername()))
             return;
 
-         String username= this.username.getEditText().getText().toString().trim();
-         String email= this.email.getEditText().getText().toString().trim();
-         String password= this.password.getEditText().getText().toString().trim();
 
+         createUser();
 
-        UserModel user =new UserModel(username,email,password);
-
-            this.users.child(username).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void unused) {
-                    Toast.makeText(SignUpActivity.this,"congratulations!\n your account has been created",Toast.LENGTH_SHORT).show();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(SignUpActivity.this,"I am sorry, there is error\n"+e.getMessage(),Toast.LENGTH_SHORT).show();
-
-                }
-            });
 
     }//end signUp
+
+    private void createUser() {
+
+        String username= this.username.getEditText().getText().toString().trim();
+        String email= this.email.getEditText().getText().toString().trim();
+        String password= this.password.getEditText().getText().toString().trim();
+
+        auth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                if(task.isSuccessful()) {
+                    String id=task.getResult().getUser().getUid();
+                    UserModel user = new UserModel(id,username, email, password);
+
+                    users.child(id).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(SignUpActivity.this, "congratulations!\n your account has been created", Toast.LENGTH_SHORT).show();
+
+                            Intent in = new Intent(SignUpActivity.this, LoginActivity.class);
+                            startActivity(in);
+                        }//end onSuccess
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(SignUpActivity.this, "I am sorry, there is error\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }//end onFailure
+                    });
+                }//end if
+                else
+                    Toast.makeText(SignUpActivity.this,"Sorry your account is not created\n" +
+                            "Please tyr again",Toast.LENGTH_SHORT).show();
+            }//end onComplete
+        });
+
+    }//end createUser
 
     public void login(View view) {
         Intent in = new Intent(this,LoginActivity.class);

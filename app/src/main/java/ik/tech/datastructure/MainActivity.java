@@ -24,10 +24,7 @@ public class MainActivity extends AppCompatActivity {
                 in = new Intent(this, LoginActivity.class);
                 startActivity(in);
                 break;
-            case R.id.profile:
-                 in = new Intent(this, ProfileActivity.class);
-                startActivity(in);
-                break;
+
             default:
 
         }

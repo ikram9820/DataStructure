@@ -40,12 +40,12 @@
                 android:textSize="20sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/signInUsername"
+                    android:id="@+id/signInEmail"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="100px"
-                    android:hint="Username">
+                    android:hint="Email">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -81,10 +81,23 @@
                 android:text="sing in" />
 
             <Button
+                android:id="@+id/googleSignIn"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/transparent"
+                android:text="Sign In With Google"
+                android:gravity="center"
+
+                android:drawableLeft="@drawable/google"
+                android:elevation="0dp"
+                android:onClick="signInWithGoogle"
+                android:textColor="@color/black" />
+
+            <Button
                 android:id="@+id/forgetPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/black"
                 android:background="@android:color/transparent"
