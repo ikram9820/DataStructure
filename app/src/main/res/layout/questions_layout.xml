@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/nameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/questionTv"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:text="TextView"
+        android:textSize="15dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/ansBt"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:minHeight="48dp"
+            app:srcCompat="@drawable/questreply"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/sinceTv"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="TextView"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/questEditBt"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:minHeight="48dp"
+            app:srcCompat="@drawable/questedit"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageButton
+            android:id="@+id/questDeleteBt"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+
+            android:minHeight="48dp"
+            app:srcCompat="@drawable/questdelete"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    </LinearLayout>
+</LinearLayout>

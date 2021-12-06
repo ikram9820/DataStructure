@@ -114,10 +114,10 @@ public class LoginActivity extends AppCompatActivity {
             this.signInEmail.setError("field cannot be empty");
             return false;
         }
-        else if(!email.matches(emailPattern)){
-            this.signInEmail.setError("invalid email address");
-            return false;
-        }
+//        else if(!email.matches(emailPattern)){
+//            this.signInEmail.setError("invalid email address");
+//            return false;
+//        }
         else{
             this.signInEmail.setError(null);
             return true;
@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else
                     Toast.makeText(LoginActivity.this, "sorry there is error\n" +
-                            task.getResult(), Toast.LENGTH_SHORT).show();
+                            task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -173,8 +173,5 @@ public class LoginActivity extends AppCompatActivity {
         Intent in = new Intent(this,SignUpActivity.class);
         startActivity(in);
     }//end signUp
-
-    public void forgetPassword(View view) {
-    }//end forgetPassword
 
 }

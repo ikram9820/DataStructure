@@ -306,7 +306,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="updateCode"
-                    android:text="update" />
+                    android:text="update"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -339,6 +340,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:inputType="textMultiLine|textPersonName"
+                        android:visibility="gone"
                         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
                 </LinearLayout>
             </HorizontalScrollView>
@@ -348,9 +350,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="15dp"
                 android:layout_weight="1"
-                android:background="@drawable/comment_layout_bg"
+                android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingTop="20dp">
 
@@ -388,15 +390,13 @@
 
                 </LinearLayout>
 
-                <RelativeLayout
-                    android:id="@+id/comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/comment_bg">
-
-                </RelativeLayout>
             </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/questionRv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
 
 
         </LinearLayout>

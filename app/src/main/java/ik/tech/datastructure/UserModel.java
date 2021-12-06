@@ -1,7 +1,7 @@
 package ik.tech.datastructure;
 
 public class UserModel {
-    private String username;
+    private String name;
     private String email;
     private String password;
     private String id;
@@ -9,9 +9,9 @@ public class UserModel {
     public UserModel(){
 
     }
-    public UserModel(String username, String email, String password, String id) {
+    public UserModel(String name, String email, String password, String id) {
         this.id=id;
-        this.username = username;
+        this.name = name;
         this.email = email;
         this.password = password;
     }
@@ -20,7 +20,7 @@ public class UserModel {
         return id;
     }
     public String getUsername() {
-        return username;
+        return name;
     }
 
     public String getEmail() {

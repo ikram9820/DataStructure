@@ -4,6 +4,8 @@ import androidx.annotation.ArrayRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Build;
@@ -22,8 +24,12 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,36 +37,43 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 public class ArrayActivity extends AppCompatActivity {
 
 
     private static final String TAG ="ik.Array Activity" ;
     private static FirebaseDatabase database;
-    private DatabaseReference codes;
-    private DatabaseReference users;
-    private DatabaseReference questions;
-    private DatabaseReference replies;
     static {
         database = FirebaseDatabase.getInstance();
         database.setPersistenceEnabled(true);
-        }
+    }
+    private DatabaseReference codes;
+    private DatabaseReference users;
+    private DatabaseReference questions;
+    private DatabaseReference answers;
 
+
+
+    private FirebaseAuth auth;
+    private FirebaseUser user;
+    private GoogleSignInAccount account;
 
     private Array arr;
-
     private String codeName , language ;
     private final String ds = "array";
     private String codeId, code=".....";
-
     private String[] spinnerArray = null;
     private ArrayAdapter<String> spinnerArrayAdapter = null;
-
     private Spinner spinner;
     private EditText codeEt,dataEt, indexEt, questEt;
     private TextView codeTv, outputTv, insertTv, deleteTv, getTv, sortTv, searchTv;
-    private Button enterBt, postBt, insertBt, deleteBt, searchBt, sortBt, javaBt, cBt, pythonBt, algoBt;
+    private Button enterBt, postBt, insertBt, deleteBt, searchBt, sortBt, javaBt, cBt, pythonBt, algoBt,editCodeBt;
 
+    private RecyclerView questionRv;
+    private QuestionsAdapter questAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +85,15 @@ public class ArrayActivity extends AppCompatActivity {
 
         Intent in = getIntent();
 
-
         codes = database.getReference("codes");
         codes.keepSynced(true);
         users = database.getReference("users");
         questions = database.getReference("questions");
-        replies = database.getReference("replies");
+        answers = database.getReference("answers");
+
+        auth=FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
 
         arr = new Array(10);
         codeName="";
@@ -98,7 +114,7 @@ public class ArrayActivity extends AppCompatActivity {
         cBt = (Button) findViewById(R.id.cBt);
         pythonBt = (Button) findViewById(R.id.pythonBt);
         algoBt = (Button) findViewById(R.id.algoBt);
-
+        editCodeBt=(Button) findViewById(R.id.editCodeBt);
         codeEt = (EditText) findViewById(R.id.codeEt);
         dataEt = (EditText) findViewById(R.id.dataEt);
         indexEt = (EditText) findViewById(R.id.indexEt);
@@ -176,13 +192,35 @@ public class ArrayActivity extends AppCompatActivity {
         });
 
 
+
     }//end onCreate
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //GoogleSignIn.getLastSignedInAccount(this);
+        if(user!=null) {
+
+            if (user.getEmail().equals("achakzai9820@gmail.com")) {
+                Toast.makeText(this, "admin account", Toast.LENGTH_SHORT).show();
+
+                editCodeBt.setVisibility(View.VISIBLE);
+                codeEt.setVisibility(View.VISIBLE);
+            }
+            else {
+                editCodeBt.setVisibility(View.GONE);
+                codeEt.setVisibility(View.GONE);
+            }
+        }//end if
+        else{
+            editCodeBt.setVisibility(View.GONE);
+            codeEt.setVisibility(View.GONE);
+        }
+        }//end onStart
+
 
 
     Integer index = null, data = null;
-
-
-
 
     public void enterDataHandler(View view) {
         try {
@@ -278,8 +316,6 @@ public class ArrayActivity extends AppCompatActivity {
         this.outputTv.setText(arr.traverse());
     }//end enterDataHandler
 
-
-
     public void insertHandler(View view) {
         setSpinnerData(R.array.insertion_choice_array);
         setTextColor(insertTv);
@@ -296,9 +332,6 @@ public class ArrayActivity extends AppCompatActivity {
         setSpinnerData(R.array.get_choice);
         setTextColor(getTv);
         enterBt.setText("get");
-
-
-
     }//end getHandler
 
     public void sortHandler(View view) {
@@ -384,11 +417,18 @@ public class ArrayActivity extends AppCompatActivity {
 
 
     }//end updateCode
+    public void setRecycler(){
+        questionRv = (RecyclerView) findViewById(R.id.questionRv);
+        questAdapter = new QuestionsAdapter(this,user.getUid(),codeId);
 
+        questionRv.setAdapter(questAdapter);
+        questionRv.setLayoutManager(new LinearLayoutManager(this));
+
+    }//end setRecycler
     public void setCodeTvText(){
         String codeNameWithoutSpace= this.codeName.replaceAll("\\s","");
         codeId=(this.language+ this.ds + codeNameWithoutSpace).trim();
-
+//        setRecycler();
         codes.child(codeId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -408,9 +448,53 @@ public class ArrayActivity extends AppCompatActivity {
 
     }//end setCodeTvText
 
+    public  String getTime(){
+        String postedTime=null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDateTime dt = LocalDateTime.now();
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            postedTime = dt.format(format);
+        }
+
+        return postedTime;
+    }
+
     public void postQuestHandler(View view) {
+        if(user == null) {
+            Toast.makeText(this, "you should logged in for asking questions", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, LoginActivity.class));
+            return;
+        }
+        String question = questEt.getText().toString();
+        if(question.isEmpty()){
+            Toast.makeText(this, "Question field can not be empty ", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Toast.makeText(ArrayActivity.this,"Question is submitting please wait",Toast.LENGTH_SHORT).show();
+
+
+        String questId = questions.push().getKey();
+
+        QuestionModel questionData=new QuestionModel(questId,question,codeId,user.getUid(),getTime());
+        questions.child(questId).setValue(questionData).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(ArrayActivity.this,"Question is submitted",Toast.LENGTH_SHORT).show();
+                Log.e(TAG,"value is set to database ");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(ArrayActivity.this,"value is not set to database",Toast.LENGTH_SHORT).show();
+                Log.e(TAG,e.getMessage());
+            }
+        });
 
     }//end postQuestHandler
+
+    public void setQuestions(){
+
+    }
 
     public void showData() {
         this.dataEt.setVisibility(View.VISIBLE);
@@ -436,55 +520,3 @@ public class ArrayActivity extends AppCompatActivity {
 
 }//end ArrayActivity
 
-
-//    public void showCode(View view){
-//        if(codeTextBtn.getText().equals("show code")) {
-//
-//            codeTextBtn.setText("hide code");
-//            algoTextBtn.setText("show algorithm");
-//            codeTextBtn.setBackgroundColor(getResources().getColor(R.color.blackLight));
-//            codeTextBtn.setTextColor(getResources().getColor(R.color.white));
-//
-//            algoTextBtn.setBackgroundColor(getResources().getColor(R.color.white));
-//            algoTextBtn.setTextColor(getResources().getColor(R.color.black));
-//
-//            algo.setVisibility(View.GONE);
-//            code.setVisibility(View.VISIBLE);
-//
-//            return;
-//        }
-//
-//        codeTextBtn.setBackgroundColor(getResources().getColor(R.color.white));
-//        codeTextBtn.setText("show code");
-//
-//
-//        codeTextBtn.setTextColor(getResources().getColor(R.color.black));
-//
-//        code.setVisibility(View.GONE);
-//    }
-//
-//    public void showAlgo(View view){
-//        if(algoTextBtn.getText().equals("show algorithm")) {
-//
-//            algoTextBtn.setText("hide algorithm");
-//            codeTextBtn.setText("show code");
-//
-//            algoTextBtn.setBackgroundColor(getResources().getColor(R.color.blackLight));
-//            algoTextBtn.setTextColor(getResources().getColor(R.color.white));
-//
-//            codeTextBtn.setBackgroundColor(getResources().getColor(R.color.white));
-//            codeTextBtn.setTextColor(getResources().getColor(R.color.black));
-//
-//            code.setVisibility(View.GONE);
-//            algo.setVisibility(View.VISIBLE);
-//
-//            return;
-//        }
-//
-//        algoTextBtn.setBackgroundColor(getResources().getColor(R.color.white));
-//        algoTextBtn.setText("show algorithm");
-//
-//
-//        algoTextBtn.setTextColor(getResources().getColor(R.color.black));
-//        algo.setVisibility(View.GONE);
-//    }

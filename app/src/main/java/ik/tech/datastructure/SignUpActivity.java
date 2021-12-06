@@ -44,26 +44,11 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    public Boolean isWhiteSpace(String uname){
-        for(int i=0;i<uname.length();i++){
-            if(Character.isWhitespace(uname.charAt(i)))
-                return true;
-        }
-        return false;
-    }
     public Boolean validateUsername(){
         String username= this.username.getEditText().getText().toString().trim();
 
         if(username.isEmpty()){
             this.username.setError("field cannot be empty");
-            return false;
-        }
-        else if(isWhiteSpace(username)){
-            this.username.setError("white spaces are not allowed");
-            return false;
-        }
-        else if(isUserAvailable(username)){
-            this.username.setError("The username is exist");
             return false;
         }
         else{
@@ -122,43 +107,16 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }//end validateRePassword
 
-    boolean isUserAvailable;
-    public Boolean isUserAvailable(String uname){
-
-            this.users.child(uname).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists())
-                        isUserAvailable=true;
-                    else
-                        isUserAvailable =false;
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(SignUpActivity.this,"Database error \n"+error.getMessage(),Toast.LENGTH_SHORT).show();
-
-                }
-            });
-        return isUserAvailable;
-    }//end isUserAvailable
-
-
 
 
     public void signUp(View view) {
         if(!(validateEmail() & validatePassword() & validateRePassword() & validateUsername()))
             return;
-
-
          createUser();
-
-
     }//end signUp
 
     private void createUser() {
-
-        String username= this.username.getEditText().getText().toString().trim();
+        String name= this.username.getEditText().getText().toString().trim();
         String email= this.email.getEditText().getText().toString().trim();
         String password= this.password.getEditText().getText().toString().trim();
 
@@ -169,7 +127,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if(task.isSuccessful()) {
                     String id=task.getResult().getUser().getUid();
-                    UserModel user = new UserModel(id,username, email, password);
+                    UserModel user = new UserModel(name, email, password,id);
 
                     users.child(id).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -183,13 +141,12 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(SignUpActivity.this, "I am sorry, there is error\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-
                         }//end onFailure
                     });
                 }//end if
                 else
-                    Toast.makeText(SignUpActivity.this,"Sorry your account is not created\n" +
-                            "Please tyr again",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this,"this email is existing\n"
+                            +task.getException(),Toast.LENGTH_SHORT).show();
             }//end onComplete
         });
 
