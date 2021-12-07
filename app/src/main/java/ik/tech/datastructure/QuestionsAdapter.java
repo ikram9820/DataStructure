@@ -1,15 +1,19 @@
 package ik.tech.datastructure;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,42 +25,47 @@ import java.util.ArrayList;
 
 public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.QuestionsHolder> {
     private Context ctx;
+    final String TAG="Questions Adapter";
     private FirebaseDatabase db;
-    private DatabaseReference questions,answers,users;
+    private DatabaseReference questions;
+    private FirebaseUser user;
+    private FirebaseAuth auth;
     private String userId,codeId;
     private ArrayList<QuestionModel> questionsList;
 
     public void getQuestions(){
+        questionsList= new ArrayList<QuestionModel>();
         questions.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    for (DataSnapshot snap: snapshot.getChildren()) {
-                        if(snap.child("codeId").getValue().toString().equals(codeId)) {
-                            QuestionModel quest = snap.getValue(QuestionModel.class);
-                            questionsList.add(quest);
-                        }
-                    }//end foreach
+                    for ( DataSnapshot snap : snapshot.getChildren() ) {
+                        QuestionModel quest = snap.getValue(QuestionModel.class);
+                        questionsList.add(quest);
+                    }
                 }//end if
             }//end onDataChange
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e(TAG,error.getMessage());
             }
         });
 
     }//end getQuestions
 
 
-    public QuestionsAdapter(Context ctx, String userId, String codeId ){
+    public QuestionsAdapter(Context ctx, String codeId ){
         this.ctx=ctx;
-        this.userId=userId;
+
         this.codeId=codeId;
         db=FirebaseDatabase.getInstance();
-        questions = db.getReference("questions");
-        answers = db.getReference("answers");
-        users = db.getReference("users");
+        questions = db.getReference("codes").child(codeId).child("questions");
+        auth =FirebaseAuth.getInstance();
+        user= auth.getCurrentUser();
+        if(user!=null)
+        this.userId=user.getUid();
+        getQuestions();
     }
 
     @NonNull
@@ -67,57 +76,44 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
         return new QuestionsHolder(questView);
     }
 
-    String name;
+    private String name=null;
 
     @Override
     public void onBindViewHolder(@NonNull QuestionsHolder holder, int position) {
-        for(int i=0;i<questionsList.size();i++){
+        for(int i=0;i<questionsList.size();i++) {
 
-            QuestionModel quest=questionsList.get(i);
+            QuestionModel quest = questionsList.get(i);
+
             holder.questionTv.setText(quest.getQuestion());
             holder.sinceTv.setText(quest.getPostedTime());
-
-            users.child(quest.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()){
-                        name=snapshot.getValue(String.class);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+            name = user.getDisplayName();
             holder.nameTv.setText(name);
 
+                holder.ansBt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
+                    }
+                });
+                holder.questEditBt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-            holder.ansBt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                    }
+                });
+                holder.questDeleteBt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-                }
-            });
-            holder.questEditBt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                    }
+                });
 
-                }
-            });
-            holder.questDeleteBt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
         }//end for
     }//end onBindViewHolder
 
     @Override
     public int getItemCount() {
-        return 0;
+        return questionsList.size();
     }
 
     public class QuestionsHolder extends RecyclerView.ViewHolder{

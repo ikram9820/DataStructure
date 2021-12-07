@@ -44,22 +44,20 @@ import java.time.format.DateTimeFormatter;
 public class ArrayActivity extends AppCompatActivity {
 
 
-    private static final String TAG ="ik.Array Activity" ;
+    private static final String TAG ="Array Activity" ;
     private static FirebaseDatabase database;
     static {
         database = FirebaseDatabase.getInstance();
         database.setPersistenceEnabled(true);
     }
     private DatabaseReference codes;
-    private DatabaseReference users;
-    private DatabaseReference questions;
-    private DatabaseReference answers;
+
 
 
 
     private FirebaseAuth auth;
     private FirebaseUser user;
-    private GoogleSignInAccount account;
+
 
     private Array arr;
     private String codeName , language ;
@@ -70,7 +68,7 @@ public class ArrayActivity extends AppCompatActivity {
     private Spinner spinner;
     private EditText codeEt,dataEt, indexEt, questEt;
     private TextView codeTv, outputTv, insertTv, deleteTv, getTv, sortTv, searchTv;
-    private Button enterBt, postBt, insertBt, deleteBt, searchBt, sortBt, javaBt, cBt, pythonBt, algoBt,editCodeBt;
+    private Button enterBt,javaBt, cBt, pythonBt, algoBt,editCodeBt;
 
     private RecyclerView questionRv;
     private QuestionsAdapter questAdapter;
@@ -86,10 +84,6 @@ public class ArrayActivity extends AppCompatActivity {
         Intent in = getIntent();
 
         codes = database.getReference("codes");
-        codes.keepSynced(true);
-        users = database.getReference("users");
-        questions = database.getReference("questions");
-        answers = database.getReference("answers");
 
         auth=FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
@@ -109,7 +103,6 @@ public class ArrayActivity extends AppCompatActivity {
 
 
         enterBt = (Button) findViewById(R.id.enterBt);
-        postBt = (Button) findViewById(R.id.postBt);
         javaBt = (Button) findViewById(R.id.javaBt);
         cBt = (Button) findViewById(R.id.cBt);
         pythonBt = (Button) findViewById(R.id.pythonBt);
@@ -193,6 +186,7 @@ public class ArrayActivity extends AppCompatActivity {
 
 
 
+
     }//end onCreate
 
     @Override
@@ -226,13 +220,13 @@ public class ArrayActivity extends AppCompatActivity {
         try {
             this.data = Integer.parseInt(dataEt.getText().toString());
         } catch (Exception e) {
-            Log.w(null, "please enter data in text filed");
+            Log.e(TAG, "please enter data in text filed");
             return;
         }
         try {
             this.index = Integer.parseInt(indexEt.getText().toString());
         } catch (Exception e) {
-            Log.e(null, "please enter index in text filed");
+            Log.e(TAG, "please enter index in text filed");
             return;
         }
 
@@ -400,52 +394,61 @@ public class ArrayActivity extends AppCompatActivity {
         code = codeEt.getText().toString();
 
         CodeModel codeModel = new CodeModel(codeId,code);
-        codes.child(codeId).setValue(codeModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                setCodeTvText();
-                Log.e(TAG,"value is set to database ");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(ArrayActivity.this,"value is not set to database",Toast.LENGTH_SHORT);
-                Log.e(TAG,e.getMessage());
-            }
-        });
-
+        try {
+            codes.child(codeId).setValue(codeModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    setCodeTvText();
+                    Log.e(TAG, "value is set to database ");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(ArrayActivity.this, "value is not set to database", Toast.LENGTH_SHORT);
+                    Log.e(TAG, e.getMessage());
+                }
+            });
+        }catch (Exception e){ Log.e(TAG, e.getMessage());}
 
 
     }//end updateCode
-    public void setRecycler(){
-        questionRv = (RecyclerView) findViewById(R.id.questionRv);
-        questAdapter = new QuestionsAdapter(this,user.getUid(),codeId);
 
-        questionRv.setAdapter(questAdapter);
-        questionRv.setLayoutManager(new LinearLayoutManager(this));
+
+    public void setRecycler(String id){
+            questionRv = (RecyclerView) findViewById(R.id.questionRv);
+            questAdapter = new QuestionsAdapter(this, id);
+
+            questionRv.setAdapter(questAdapter);
+            questionRv.setLayoutManager(new LinearLayoutManager(this));
 
     }//end setRecycler
+
     public void setCodeTvText(){
         String codeNameWithoutSpace= this.codeName.replaceAll("\\s","");
         codeId=(this.language+ this.ds + codeNameWithoutSpace).trim();
-//        setRecycler();
-        codes.child(codeId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    String codeFromDb=snapshot.child("code").getValue(String.class);
-                    codeTv.setText(codeFromDb);
-                    codeEt.setText(codeFromDb);
+        DatabaseReference code=codes.child(codeId);
+        code.keepSynced(true);
+
+        try {
+
+            code.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String codeFromDb = snapshot.child("code").getValue(String.class);
+                        codeTv.setText(codeFromDb);
+                        codeEt.setText(codeFromDb);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(ArrayActivity.this,"no such code exist "+error.getMessage(),Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.e(TAG, error.getMessage());
+                    Toast.makeText(ArrayActivity.this, "no such code exist " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }catch (Exception e){ Log.e(TAG, e.getMessage()); }
+        setRecycler(codeId);
     }//end setCodeTvText
 
     public  String getTime(){
@@ -472,29 +475,25 @@ public class ArrayActivity extends AppCompatActivity {
         }
         Toast.makeText(ArrayActivity.this,"Question is submitting please wait",Toast.LENGTH_SHORT).show();
 
-
-        String questId = questions.push().getKey();
-
-        QuestionModel questionData=new QuestionModel(questId,question,codeId,user.getUid(),getTime());
-        questions.child(questId).setValue(questionData).addOnSuccessListener(new OnSuccessListener<Void>() {
+        try {
+            String questId = codes.child(codeId).child("questions").push().getKey();
+            QuestionModel questionData=new QuestionModel(questId,question,codeId,user.getUid(),getTime());
+            codes.child(codeId).child("questions").child(questId).setValue(questionData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(ArrayActivity.this,"Question is submitted",Toast.LENGTH_SHORT).show();
-                Log.e(TAG,"value is set to database ");
+                Log.i(TAG,"value is set to database ");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(ArrayActivity.this,"value is not set to database",Toast.LENGTH_SHORT).show();
+                Toast.makeText(ArrayActivity.this,"please check your internet connection",Toast.LENGTH_SHORT).show();
                 Log.e(TAG,e.getMessage());
             }
         });
 
+        }catch (Exception e){ Log.e(TAG, e.getMessage()); }
     }//end postQuestHandler
-
-    public void setQuestions(){
-
-    }
 
     public void showData() {
         this.dataEt.setVisibility(View.VISIBLE);

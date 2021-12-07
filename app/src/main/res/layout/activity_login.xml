@@ -7,6 +7,7 @@
     tools:context=".LoginActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -44,72 +45,78 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/signInEmail"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100px"
-                android:hint="Email">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/signInPassword"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10px"
-                android:hint="Password"
-                app:passwordToggleEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <Button
-                android:id="@+id/signIn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@android:color/transparent"
-                android:elevation="0dp"
-                android:onClick="singIN"
-                android:text="sing in"
-                android:textColor="@color/black" />
-
             <Button
                 android:id="@+id/googleSignIn"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="100dp"
+
                 android:background="@android:color/transparent"
                 android:drawableLeft="@drawable/google"
                 android:elevation="0dp"
-
-                android:gravity="center"
+                android:gravity="center|center_vertical"
                 android:onClick="signInWithGoogle"
                 android:text="Sign In With Google          "
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <Button
-                android:id="@+id/signUp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@android:color/transparent"
-                android:elevation="0dp"
-                android:onClick="signUp"
-                android:text="new user? sign up"
-                android:textColor="@color/black" />
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                android:id="@+id/signInEmail"-->
+            <!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="100px"-->
+            <!--                android:hint="Email">-->
+
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:inputType="text" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                android:id="@+id/signInPassword"-->
+            <!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="10px"-->
+            <!--                android:hint="Password"-->
+            <!--                app:passwordToggleEnabled="true">-->
+
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:inputType="textPassword" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+
+            <!--            <Button-->
+            <!--                android:id="@+id/signIn"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="5dp"-->
+            <!--                android:background="@android:color/transparent"-->
+            <!--                android:elevation="0dp"-->
+            <!--                android:onClick="singIN"-->
+            <!--                android:text="sing in"-->
+            <!--                android:textColor="@color/black" />-->
+
+            <!--            <Button-->
+            <!--                android:id="@+id/signUp"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="5dp"-->
+            <!--                android:background="@android:color/transparent"-->
+            <!--                android:elevation="0dp"-->
+            <!--                android:onClick="signUp"-->
+            <!--                android:text="new user? sign up"-->
+            <!--                android:textColor="@color/black" />-->
 
         </LinearLayout>
+
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

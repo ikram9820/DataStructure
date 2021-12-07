@@ -28,15 +28,15 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 4321;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth auth;
-    private TextInputLayout signInEmail,signInPassword;
+  //  private TextInputLayout signInEmail,signInPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         auth= FirebaseAuth.getInstance();
-        signInEmail = (TextInputLayout) findViewById(R.id.signInEmail);
-        signInPassword= (TextInputLayout) findViewById(R.id.signInPassword);
+    //    signInEmail = (TextInputLayout) findViewById(R.id.signInEmail);
+     //   signInPassword= (TextInputLayout) findViewById(R.id.signInPassword);
         createRequest();
 
 
@@ -105,73 +105,71 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }//end firebaseAuthWithGoogle
 
-
-
-    public Boolean validateEmail(){
-        String email= this.signInEmail.getEditText().getText().toString().trim();
-        String emailPattern ="[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        if(email.isEmpty()){
-            this.signInEmail.setError("field cannot be empty");
-            return false;
-        }
+//    public Boolean validateEmail(){
+//        String email= this.signInEmail.getEditText().getText().toString().trim();
+//        String emailPattern ="[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+//        if(email.isEmpty()){
+//            this.signInEmail.setError("field cannot be empty");
+//            return false;
+//        }
 //        else if(!email.matches(emailPattern)){
 //            this.signInEmail.setError("invalid email address");
 //            return false;
 //        }
-        else{
-            this.signInEmail.setError(null);
-            return true;
-        }
-    }//end validateEmail
-
-    public Boolean validatePassword(){
-        String password = this.signInPassword.getEditText().getText().toString().trim();
-        if(password.isEmpty()){
-            this.signInPassword.setError("field cannot be empty");
-            return false;
-        }
-        else if (password.length()<6){
-            this.signInPassword.setError("password length can not be less then six character");
-            return false;
-        }
-        else{
-            this.signInPassword.setError(null);
-            return true;
-        }
-    }//end validate Password
-
-    public void singIN(View view) {
-        if(!(validateEmail() & validatePassword()))
-            return;
-
-        login();
-
-    }//end signIn
-
-    public void login (){
-
-        String email= this.signInEmail.getEditText().getText().toString().trim();
-        String password = this.signInPassword.getEditText().getText().toString().trim();
-
-        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-
-                    Toast.makeText(LoginActivity.this, "you are Logged In", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                }
-                else
-                    Toast.makeText(LoginActivity.this, "sorry there is error\n" +
-                            task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }//end login
-
-    public void signUp(View view) {
-        Intent in = new Intent(this,SignUpActivity.class);
-        startActivity(in);
-    }//end signUp
+//        else{
+//            this.signInEmail.setError(null);
+//            return true;
+//        }
+//    }//end validateEmail
+//
+//    public Boolean validatePassword(){
+//        String password = this.signInPassword.getEditText().getText().toString().trim();
+//        if(password.isEmpty()){
+//            this.signInPassword.setError("field cannot be empty");
+//            return false;
+//        }
+//        else if (password.length()<6){
+//            this.signInPassword.setError("password length can not be less then six character");
+//            return false;
+//        }
+//        else{
+//            this.signInPassword.setError(null);
+//            return true;
+//        }
+//    }//end validate Password
+//
+//    public void singIN(View view) {
+//        if(!(validateEmail() & validatePassword()))
+//            return;
+//
+//        login();
+//
+//    }//end signIn
+//
+//    public void login (){
+//
+//        String email= this.signInEmail.getEditText().getText().toString().trim();
+//        String password = this.signInPassword.getEditText().getText().toString().trim();
+//
+//        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if(task.isSuccessful()){
+//
+//                    Toast.makeText(LoginActivity.this, "you are Logged In", Toast.LENGTH_SHORT).show();
+//                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+//                }
+//                else
+//                    Toast.makeText(LoginActivity.this, "sorry there is error\n" +
+//                            task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//    }//end login
+//
+//    public void signUp(View view) {
+//        Intent in = new Intent(this,SignUpActivity.class);
+//        startActivity(in);
+//    }//end signUp
 
 }
