@@ -35,199 +35,208 @@ public class GraphActivity extends AppCompatActivity {
 
         g=new Graph();
         diG= new DiGraph();
-        llOutputUnDiG =(LinearLayout)findViewById(R.id.llOutputUnDiG) ;
-        llOutputDiG = findViewById(R.id.llOutputDiG);
-        showUndiGraph=findViewById(R.id.show_undigraph);
-        showDiGraph= findViewById(R.id.show_digraph);
-        vert=(EditText)findViewById(R.id.vert);
-        u=(EditText)findViewById(R.id.u) ;
-        v=(EditText)findViewById(R.id.v);
-        vert1=(EditText)findViewById(R.id.vert1);
-        u1=(EditText)findViewById(R.id.u1) ;
-        v1=(EditText)findViewById(R.id.v1);
-
-
-        code=(TextView)findViewById(R.id.codetext);
-        code1=(TextView)findViewById(R.id.codetext1);
 
     }
 
+//
+//public void clearEditText(){
+//        vert.setText("");
+//        v.setText("");
+//        u.setText("");
+//}
+//
+//
+//    public void clearEditText1(){
+//        vert1.setText("");
+//        v1.setText("");
+//        u1.setText("");
+//    }
+//    public void addVertex(View view) {
+//
+//        try {
+//            Toast.makeText(getApplicationContext(),g.addVertex(Integer.parseInt(vert.getText().toString())), Toast.LENGTH_SHORT).show();
+//        } catch (Exception e) {
+//            Toast.makeText(getApplicationContext(), "please enter data   \n" , Toast.LENGTH_SHORT).show();
+//        }
+//        display(1);
+//        clearEditText();
+//    }
+//
+//    public void addEdge(View view) {
+//        try {
+//            Toast.makeText(getApplicationContext(),g.addEdge(Integer.parseInt(u.getText().toString()),(Integer.parseInt(v.getText().toString()))), Toast.LENGTH_SHORT).show();
+//        } catch (Exception e) {
+//            Toast.makeText(getApplicationContext(), "please enter data   \n", Toast.LENGTH_SHORT).show();
+//        }
+//        clearEditText();
+//        display(1);
+//    }
+//
+//    public void delVertex(View view) {
+//
+//        try {
+//            Toast.makeText(getApplicationContext(),g.delVert(Integer.parseInt(vert.getText().toString())), Toast.LENGTH_SHORT).show();
+//        } catch (Exception e) {
+//            Toast.makeText(getApplicationContext(), "please enter data   \n", Toast.LENGTH_SHORT).show();
+//        }
+//        display(1);
+//        clearEditText();
+//    }
+//
+//    public void delEdge(View view) {
+//        try {
+//            Toast.makeText(getApplicationContext(),g.delEdge((Integer.parseInt(u.getText().toString())),(Integer.parseInt(v.getText().toString()))), Toast.LENGTH_SHORT).show();
+//        } catch (Exception e) {
+//            Toast.makeText(getApplicationContext(), "please enter data   \n", Toast.LENGTH_SHORT).show();
+//        }
+//        clearEditText();
+//        display(1);
+//    }
+//    public void showCode(View view){
+//        if(showUndiGraph.getText().equals("show code")) {
+//            showUndiGraph.setBackgroundColor(getResources().getColor(R.color.blackLight));
+//            showUndiGraph.setText("hide code");
+//            showUndiGraph.setTextColor(getResources().getColor(R.color.white));
+//            code.setText(Html.fromHtml(getString(R.string.graph_code)));
+//            code.setVisibility(View.VISIBLE);
+//            return;
+//        }
+//
+//        showUndiGraph.setBackgroundColor(getResources().getColor(R.color.white));
+//        showUndiGraph.setText("show code");
+//        showUndiGraph.setTextColor(getResources().getColor(R.color.black));
+//        code.setText(".....");
+//        code.setVisibility(View.GONE);
+//    }
+//
+//
+//    public void addVertex1(View view) {
+//        try {
+//            Toast.makeText(getApplicationContext(),diG.addVert(Integer.parseInt(vert1.getText().toString())), Toast.LENGTH_SHORT).show();
+//        } catch (Exception e) {
+//            Toast.makeText(getApplicationContext(), "please enter data   \n" , Toast.LENGTH_SHORT).show();
+//        }
+//        display(2);
+//        clearEditText1();
+//    }
+//
+//    public void addEdge1(View view) {
+//        try {
+//            Toast.makeText(getApplicationContext(),diG.addEdge(Integer.parseInt(u1.getText().toString()),(Integer.parseInt(v1.getText().toString()))), Toast.LENGTH_SHORT).show();
+//        } catch (Exception e) {
+//            Toast.makeText(getApplicationContext(), "please enter data   \n", Toast.LENGTH_SHORT).show();
+//        }
+//        clearEditText1();
+//        display(2);
+//    }
+//
+//    public void delVertex1(View view) {
+//
+//        try {
+//            Toast.makeText(getApplicationContext(),diG.delVert(Integer.parseInt(vert1.getText().toString())), Toast.LENGTH_SHORT).show();
+//        } catch (Exception e) {
+//            Toast.makeText(getApplicationContext(), "please enter data   \n" , Toast.LENGTH_SHORT).show();
+//        }
+//        display(2);
+//        clearEditText1();
+//    }
+//
+//    public void delEdge1(View view) {
+//        try {
+//            Toast.makeText(getApplicationContext(),diG.delEdge((Integer.parseInt(u1.getText().toString())),(Integer.parseInt(v1.getText().toString()))), Toast.LENGTH_SHORT).show();
+//        } catch (Exception e) {
+//            Toast.makeText(getApplicationContext(), "please enter data   \n" , Toast.LENGTH_SHORT).show();
+//        }
+//        clearEditText1();
+//        display(2);
+//    }
+//    public void showCode1(View view){
+//        if(showDiGraph.getText().equals("show code")) {
+//            showDiGraph.setBackgroundColor(getResources().getColor(R.color.blackLight));
+//            showDiGraph.setText("hide code");
+//            showDiGraph.setTextColor(getResources().getColor(R.color.white));
+//            code1.setText(Html.fromHtml(getString(R.string.di_graph_code)));
+//            code1.setVisibility(View.VISIBLE);
+//            return;
+//        }
+//
+//            showDiGraph.setBackgroundColor(getResources().getColor(R.color.white));
+//            showDiGraph.setText("show code");
+//            showDiGraph.setTextColor(getResources().getColor(R.color.black));
+//            code1.setText(".....");
+//        code1.setVisibility(View.GONE);
+//    }
+//
+//    public  void display(int flag){
+//
+//        if(flag==1) {
+//            llOutputUnDiG.removeAllViews();
+//            for (int i = 0; i < g.vertices.size(); i++) {
+//                String text = "";
+//
+//                TextView t = new TextView(getApplicationContext());
+//                text = g.vertices.get(i).get(0).data + " : ";
+//                for (int j = 1; j < g.vertices.get(i).size(); j++)
+//                    text += g.vertices.get(i).get(j).data + ", ";
+//                t.setBackgroundColor(getResources().getColor(R.color.blackLight));
+//                t.setTextColor(getResources().getColor(R.color.green));
+//                t.setTextSize(15);
+//                t.setText(text);
+//                llOutputUnDiG.addView(t);
+//            }
+//        }
+//
+//
+//        if(flag==2) {
+//            llOutputDiG.removeAllViews();
+//            String text = "";
+//            TextView t0 = new TextView(getApplicationContext());
+//            t0.setBackgroundColor(getResources().getColor(R.color.blackLight));
+//            t0.setTextColor(getResources().getColor(R.color.green));
+//            text=String.format("%1$10s","");;
+//            for(int j=0;j< diG.vertices.size();j++)
+//                text+= String.format("%1$10s",diG.vertices.get(j).data);
+//            t0.setText(text);
+//            llOutputDiG.addView(t0);
+//            for (int i = 0; i < diG.vertices.size(); i++) {
+//                TextView t = new TextView(getApplicationContext());
+//
+//                text =String.format("%1$10s", diG.vertices.get(i).data) ;
+//                for (int j = 0; j < diG.vertices.size(); j++)
+//                    text += String.format("%1$11s",diG.adjacencyMat[i][j]);
+//
+//text+="\n";
+//
+//                t.setBackgroundColor(getResources().getColor(R.color.blackLight));
+//                t.setTextColor(getResources().getColor(R.color.green));
+//                t.setText(text);
+//                llOutputDiG.addView(t);
+//            }
+//        }
+//
+//    }
 
-public void clearEditText(){
-        vert.setText("");
-        v.setText("");
-        u.setText("");
-}
-
-
-    public void clearEditText1(){
-        vert1.setText("");
-        v1.setText("");
-        u1.setText("");
+    public void insertHandler(View view) {
     }
-    public void addVertex(View view) {
 
-        try {
-            Toast.makeText(getApplicationContext(),g.addVertex(Integer.parseInt(vert.getText().toString())), Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "please enter data   \n" , Toast.LENGTH_SHORT).show();
-        }
-        display(1);
-        clearEditText();
+    public void deleteHandler(View view) {
     }
 
-    public void addEdge(View view) {
-        try {
-            Toast.makeText(getApplicationContext(),g.addEdge(Integer.parseInt(u.getText().toString()),(Integer.parseInt(v.getText().toString()))), Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "please enter data   \n", Toast.LENGTH_SHORT).show();
-        }
-        clearEditText();
-        display(1);
+    public void javaCodeHandler(View view) {
     }
 
-    public void delVertex(View view) {
-
-        try {
-            Toast.makeText(getApplicationContext(),g.delVert(Integer.parseInt(vert.getText().toString())), Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "please enter data   \n", Toast.LENGTH_SHORT).show();
-        }
-        display(1);
-        clearEditText();
+    public void cCodeHandler(View view) {
     }
 
-    public void delEdge(View view) {
-        try {
-            Toast.makeText(getApplicationContext(),g.delEdge((Integer.parseInt(u.getText().toString())),(Integer.parseInt(v.getText().toString()))), Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "please enter data   \n", Toast.LENGTH_SHORT).show();
-        }
-        clearEditText();
-        display(1);
-    }
-    public void showCode(View view){
-        if(showUndiGraph.getText().equals("show code")) {
-            showUndiGraph.setBackgroundColor(getResources().getColor(R.color.blackLight));
-            showUndiGraph.setText("hide code");
-            showUndiGraph.setTextColor(getResources().getColor(R.color.white));
-            code.setText(Html.fromHtml(getString(R.string.graph_code)));
-            code.setVisibility(View.VISIBLE);
-            return;
-        }
-
-        showUndiGraph.setBackgroundColor(getResources().getColor(R.color.white));
-        showUndiGraph.setText("show code");
-        showUndiGraph.setTextColor(getResources().getColor(R.color.black));
-        code.setText(".....");
-        code.setVisibility(View.GONE);
+    public void pythonCodeHandler(View view) {
     }
 
-
-    public void addVertex1(View view) {
-        try {
-            Toast.makeText(getApplicationContext(),diG.addVert(Integer.parseInt(vert1.getText().toString())), Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "please enter data   \n" , Toast.LENGTH_SHORT).show();
-        }
-        display(2);
-        clearEditText1();
+    public void algoHandler(View view) {
     }
 
-    public void addEdge1(View view) {
-        try {
-            Toast.makeText(getApplicationContext(),diG.addEdge(Integer.parseInt(u1.getText().toString()),(Integer.parseInt(v1.getText().toString()))), Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "please enter data   \n", Toast.LENGTH_SHORT).show();
-        }
-        clearEditText1();
-        display(2);
+    public void updateCode(View view) {
     }
 
-    public void delVertex1(View view) {
-
-        try {
-            Toast.makeText(getApplicationContext(),diG.delVert(Integer.parseInt(vert1.getText().toString())), Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "please enter data   \n" , Toast.LENGTH_SHORT).show();
-        }
-        display(2);
-        clearEditText1();
+    public void enterDataHandler(View view) {
     }
-
-    public void delEdge1(View view) {
-        try {
-            Toast.makeText(getApplicationContext(),diG.delEdge((Integer.parseInt(u1.getText().toString())),(Integer.parseInt(v1.getText().toString()))), Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "please enter data   \n" , Toast.LENGTH_SHORT).show();
-        }
-        clearEditText1();
-        display(2);
-    }
-    public void showCode1(View view){
-        if(showDiGraph.getText().equals("show code")) {
-            showDiGraph.setBackgroundColor(getResources().getColor(R.color.blackLight));
-            showDiGraph.setText("hide code");
-            showDiGraph.setTextColor(getResources().getColor(R.color.white));
-            code1.setText(Html.fromHtml(getString(R.string.di_graph_code)));
-            code1.setVisibility(View.VISIBLE);
-            return;
-        }
-
-            showDiGraph.setBackgroundColor(getResources().getColor(R.color.white));
-            showDiGraph.setText("show code");
-            showDiGraph.setTextColor(getResources().getColor(R.color.black));
-            code1.setText(".....");
-        code1.setVisibility(View.GONE);
-    }
-
-    public  void display(int flag){
-
-        if(flag==1) {
-            llOutputUnDiG.removeAllViews();
-            for (int i = 0; i < g.vertices.size(); i++) {
-                String text = "";
-
-                TextView t = new TextView(getApplicationContext());
-                text = g.vertices.get(i).get(0).data + " : ";
-                for (int j = 1; j < g.vertices.get(i).size(); j++)
-                    text += g.vertices.get(i).get(j).data + ", ";
-                t.setBackgroundColor(getResources().getColor(R.color.blackLight));
-                t.setTextColor(getResources().getColor(R.color.green));
-                t.setTextSize(15);
-                t.setText(text);
-                llOutputUnDiG.addView(t);
-            }
-        }
-
-
-        if(flag==2) {
-            llOutputDiG.removeAllViews();
-            String text = "";
-            TextView t0 = new TextView(getApplicationContext());
-            t0.setBackgroundColor(getResources().getColor(R.color.blackLight));
-            t0.setTextColor(getResources().getColor(R.color.green));
-            text=String.format("%1$10s","");;
-            for(int j=0;j< diG.vertices.size();j++)
-                text+= String.format("%1$10s",diG.vertices.get(j).data);
-            t0.setText(text);
-            llOutputDiG.addView(t0);
-            for (int i = 0; i < diG.vertices.size(); i++) {
-                TextView t = new TextView(getApplicationContext());
-
-                text =String.format("%1$10s", diG.vertices.get(i).data) ;
-                for (int j = 0; j < diG.vertices.size(); j++)
-                    text += String.format("%1$11s",diG.adjacencyMat[i][j]);
-
-text+="\n";
-
-                t.setBackgroundColor(getResources().getColor(R.color.blackLight));
-                t.setTextColor(getResources().getColor(R.color.green));
-                t.setText(text);
-                llOutputDiG.addView(t);
-            }
-        }
-
-    }
-
 }

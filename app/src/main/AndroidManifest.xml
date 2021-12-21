@@ -11,17 +11,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DataStructure">
         <activity
-            android:name=".LoginActivity"
+            android:name=".account.LoginActivity"
             android:label="Login"
             android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".account.SignUpActivity"
             android:label="Sign Up"
-            android:parentActivityName=".LoginActivity"
+            android:parentActivityName=".account.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".account.ProfileActivity"
             android:exported="false"
             android:label="Profile"
             android:parentActivityName=".MainActivity" />

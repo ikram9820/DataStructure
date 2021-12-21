@@ -9,157 +9,273 @@
 
     <ScrollView
         android:layout_width="match_parent"
+
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteY="373dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/det"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Enter data"
-                android:inputType="number" />
-
             <LinearLayout
-                android:id="@+id/stack"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/border"
-                android:orientation="vertical">
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <ImageButton
+                    android:id="@+id/qInsertBt"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/insertBtn"
-                        android:layout_width="match_parent"
-                        android:backgroundTint="@color/blue"
-                        android:textColor="@color/white"
-                        android:layout_height="wrap_content"
-                        android:onClick="enQ"
-                        android:text="insert" />
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
 
-                    <Button
-                        android:id="@+id/searBtn"
-                        android:layout_width="match_parent"
-                        android:backgroundTint="@color/blue"
-                        android:textColor="@color/white"
-                        android:layout_height="wrap_content"
-                        android:onClick="deQ"
-                        android:text="delete" />
+                    android:onClick="insertHandler"
+                    app:srcCompat="@drawable/insert"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
-                    <Button
-                        android:id="@+id/frontBtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/blue"
-                        android:textColor="@color/white"
-                        android:onClick="front"
-                        android:text="front" />
-                </LinearLayout>
+                <ImageButton
+                    android:id="@+id/deleteBt"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:onClick="deleteHandler"
+                    app:srcCompat="@drawable/delete"
+                    tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+                <ImageButton
+                    android:id="@+id/getBt"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:onClick="getHandler"
+
+                    app:srcCompat="@drawable/get"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/text_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/text_bg"
-                    android:paddingTop="10dp"
-                    android:text="Output"
-                    android:textColor="@color/green"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/datatext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/text_bg"
-                    android:paddingTop="15dp"
-                    android:text="....."
-                    android:textColor="@color/green"
-                    android:textSize="18sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/insertTv"
+                    android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
 
-                    <Button
-                        android:id="@+id/codeTextBtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:onClick="showCode"
-                        android:text="show code"
-                        android:textColor="@color/black"
-                        app:backgroundTint="@color/white" />
+                    android:gravity="center"
+                    android:text="insert"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp" />
 
-                    <Button
-                        android:id="@+id/algoTextBtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                <TextView
+                    android:id="@+id/deleteTv"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
 
-                        android:onClick="showAlgo"
-                        android:text="show algorithm"
-                        android:textColor="@color/black"
-                        app:backgroundTint="@color/white" />
-                </LinearLayout>
+                    android:gravity="center"
+                    android:text="delete"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
 
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/getTv"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
 
-                    <TextView
-                        android:id="@+id/codetext1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="-8dp"
-                        android:background="@drawable/text_bg"
-                        android:contextClickable="true"
-                        android:paddingTop="15dp"
-                        android:text="click on any blue button."
-                        android:textColor="@color/green"
-                        android:textSize="18sp"
-                        android:visibility="gone" />
-                </HorizontalScrollView>
-
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/algotext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="-8dp"
-                        android:background="@drawable/text_bg"
-                        android:contextClickable="true"
-                        android:paddingTop="15dp"
-                        android:text="click on any blue button."
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:visibility="gone" />
-                </HorizontalScrollView>
+                    android:gravity="center"
+                    android:text="front"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/dataEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="enter data"
+                    android:inputType="number"
+                    android:minHeight="48dp" />
+
+                <Button
+                    android:id="@+id/enterBt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/green"
+                    android:onClick="enterDataHandler"
+
+                    android:text="enter"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+
+                android:layout_weight="1"
+                android:text="Output"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/outputTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/text_bg"
+                android:paddingTop="20dp"
+                android:text="...."
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/insertBt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:onClick="javaCodeHandler"
+                    android:text="JAVA"
+
+                    android:textColor="@color/blue"
+
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/cBt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:onClick="cCodeHandler"
+
+                    android:text="C++"
+
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/pythonBt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:onClick="pythonCodeHandler"
+                    android:text="Python"
+
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/algoBt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:onClick="algoHandler"
+                    android:text="Algo"
+
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight="1"
+                    android:text="Code"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/editCodeBt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="updateCode"
+                    android:text="update" />
+
+            </LinearLayout>
+
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/codeTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/text_bg"
+
+                        android:paddingTop="20dp"
+                        android:text="...."
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/codeEt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="textMultiLine|textPersonName"
+                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
 
         </LinearLayout>
     </ScrollView>

@@ -1,63 +1,42 @@
 package ik.tech.datastructure;
 
-import androidx.annotation.ArrayRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Application;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import ik.tech.datastructure.model.CodeModel;
 
 
 public class ArrayActivity extends AppCompatActivity {
 
-
     private static final String TAG ="Array Activity" ;
+
     private static FirebaseDatabase database;
     static {
         database = FirebaseDatabase.getInstance();
-        database.setPersistenceEnabled(true);
+        try { database.setPersistenceEnabled(true);
+        }catch (Exception e){ Log.e(TAG,e.getMessage()); }
     }
     private DatabaseReference codes;
-
-
-
-
-    private FirebaseAuth auth;
-    private FirebaseUser user;
-
 
     private Array arr;
     private String codeName , language ;
@@ -70,8 +49,6 @@ public class ArrayActivity extends AppCompatActivity {
     private TextView codeTv, outputTv, insertTv, deleteTv, getTv, sortTv, searchTv;
     private Button enterBt,javaBt, cBt, pythonBt, algoBt,editCodeBt;
 
-    private RecyclerView questionRv;
-    private QuestionsAdapter questAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +62,6 @@ public class ArrayActivity extends AppCompatActivity {
 
         codes = database.getReference("codes");
 
-        auth=FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
 
 
         arr = new Array(10);
@@ -103,7 +78,7 @@ public class ArrayActivity extends AppCompatActivity {
 
 
         enterBt = (Button) findViewById(R.id.enterBt);
-        javaBt = (Button) findViewById(R.id.javaBt);
+        javaBt = (Button) findViewById(R.id.insertBt);
         cBt = (Button) findViewById(R.id.cBt);
         pythonBt = (Button) findViewById(R.id.pythonBt);
         algoBt = (Button) findViewById(R.id.algoBt);
@@ -111,7 +86,7 @@ public class ArrayActivity extends AppCompatActivity {
         codeEt = (EditText) findViewById(R.id.codeEt);
         dataEt = (EditText) findViewById(R.id.dataEt);
         indexEt = (EditText) findViewById(R.id.indexEt);
-        questEt = (EditText) findViewById(R.id.questEt);
+
 
         spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -184,33 +159,7 @@ public class ArrayActivity extends AppCompatActivity {
             }
         });
 
-
-
-
     }//end onCreate
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //GoogleSignIn.getLastSignedInAccount(this);
-        if(user!=null) {
-
-            if (user.getEmail().equals("achakzai9820@gmail.com")) {
-                Toast.makeText(this, "admin account", Toast.LENGTH_SHORT).show();
-
-                editCodeBt.setVisibility(View.VISIBLE);
-                codeEt.setVisibility(View.VISIBLE);
-            }
-            else {
-                editCodeBt.setVisibility(View.GONE);
-                codeEt.setVisibility(View.GONE);
-            }
-        }//end if
-        else{
-            editCodeBt.setVisibility(View.GONE);
-            codeEt.setVisibility(View.GONE);
-        }
-        }//end onStart
 
 
 
@@ -342,22 +291,6 @@ public class ArrayActivity extends AppCompatActivity {
 
     }//end searchHandler
 
-    public void setTextColor(TextView tv) {
-        insertTv.setTextColor(getResources().getColor(R.color.black));
-        deleteTv.setTextColor(getResources().getColor(R.color.black));
-        sortTv.setTextColor(getResources().getColor(R.color.black));
-        getTv.setTextColor(getResources().getColor(R.color.black));
-        searchTv.setTextColor(getResources().getColor(R.color.black));
-        tv.setTextColor(getResources().getColor(R.color.blue));
-    }//end setTextColor
-
-    public void setSpinnerData(int choice) {
-        spinnerArray = getResources().getStringArray(choice);
-        spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
-        spinner.setAdapter(spinnerArrayAdapter);
-    }//end setSpinnerData
-
-
     public void javaCodeHandler(View view) {
         handleLangBt(this.javaBt, "java");
 
@@ -377,17 +310,7 @@ public class ArrayActivity extends AppCompatActivity {
         handleLangBt(this.algoBt, "algo");
     }//end algoHandler
 
-    public void handleLangBt(Button bt, String lang) {
-        this.javaBt.setTextColor(getResources().getColor(R.color.black));
-        this.cBt.setTextColor(getResources().getColor(R.color.black));
-        this.pythonBt.setTextColor(getResources().getColor(R.color.black));
-        this.algoBt.setTextColor(getResources().getColor(R.color.black));
-        bt.setTextColor(getResources().getColor(R.color.blue));
-        this.language = lang;
-        setCodeTvText();
-
-    }//end setTextColor
-
+   //fetch code from firebase database functions
 
     public void updateCode(View view) {
 
@@ -413,16 +336,6 @@ public class ArrayActivity extends AppCompatActivity {
 
     }//end updateCode
 
-
-    public void setRecycler(String id){
-            questionRv = (RecyclerView) findViewById(R.id.questionRv);
-            questAdapter = new QuestionsAdapter(this, id);
-
-            questionRv.setAdapter(questAdapter);
-            questionRv.setLayoutManager(new LinearLayoutManager(this));
-
-    }//end setRecycler
-
     public void setCodeTvText(){
         String codeNameWithoutSpace= this.codeName.replaceAll("\\s","");
         codeId=(this.language+ this.ds + codeNameWithoutSpace).trim();
@@ -430,7 +343,6 @@ public class ArrayActivity extends AppCompatActivity {
         code.keepSynced(true);
 
         try {
-
             code.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -448,52 +360,36 @@ public class ArrayActivity extends AppCompatActivity {
                 }
             });
         }catch (Exception e){ Log.e(TAG, e.getMessage()); }
-        setRecycler(codeId);
+
     }//end setCodeTvText
 
-    public  String getTime(){
-        String postedTime=null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDateTime dt = LocalDateTime.now();
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            postedTime = dt.format(format);
-        }
+    //helper method
 
-        return postedTime;
-    }
+    public void handleLangBt(Button bt, String lang) {
+        this.javaBt.setTextColor(getResources().getColor(R.color.black));
+        this.cBt.setTextColor(getResources().getColor(R.color.black));
+        this.pythonBt.setTextColor(getResources().getColor(R.color.black));
+        this.algoBt.setTextColor(getResources().getColor(R.color.black));
+        bt.setTextColor(getResources().getColor(R.color.blue));
+        this.language = lang;
+        setCodeTvText();
 
-    public void postQuestHandler(View view) {
-        if(user == null) {
-            Toast.makeText(this, "you should logged in for asking questions", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, LoginActivity.class));
-            return;
-        }
-        String question = questEt.getText().toString();
-        if(question.isEmpty()){
-            Toast.makeText(this, "Question field can not be empty ", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        Toast.makeText(ArrayActivity.this,"Question is submitting please wait",Toast.LENGTH_SHORT).show();
+    }//end setTextColor
 
-        try {
-            String questId = codes.child(codeId).child("questions").push().getKey();
-            QuestionModel questionData=new QuestionModel(questId,question,codeId,user.getUid(),getTime());
-            codes.child(codeId).child("questions").child(questId).setValue(questionData).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(ArrayActivity.this,"Question is submitted",Toast.LENGTH_SHORT).show();
-                Log.i(TAG,"value is set to database ");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(ArrayActivity.this,"please check your internet connection",Toast.LENGTH_SHORT).show();
-                Log.e(TAG,e.getMessage());
-            }
-        });
+    public void setSpinnerData(int choice) {
+        spinnerArray = getResources().getStringArray(choice);
+        spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
+        spinner.setAdapter(spinnerArrayAdapter);
+    }//end setSpinnerData
 
-        }catch (Exception e){ Log.e(TAG, e.getMessage()); }
-    }//end postQuestHandler
+    public void setTextColor(TextView tv) {
+        insertTv.setTextColor(getResources().getColor(R.color.black));
+        deleteTv.setTextColor(getResources().getColor(R.color.black));
+        sortTv.setTextColor(getResources().getColor(R.color.black));
+        getTv.setTextColor(getResources().getColor(R.color.black));
+        searchTv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextColor(getResources().getColor(R.color.blue));
+    }//end setTextColor
 
     public void showData() {
         this.dataEt.setVisibility(View.VISIBLE);
@@ -516,6 +412,4 @@ public class ArrayActivity extends AppCompatActivity {
         this.indexEt.setVisibility(View.GONE);
     }
 
-
 }//end ArrayActivity
-

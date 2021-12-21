@@ -28,7 +28,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/insertBt"
+                    android:id="@+id/arrayInsertBt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
@@ -37,7 +37,7 @@
 
                     android:onClick="insertHandler"
                     app:srcCompat="@drawable/insert"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    tools:ignore="DuplicateIds,SpeakableTextPresentCheck" />
 
                 <ImageButton
                     android:id="@+id/deleteBt"
@@ -233,7 +233,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/javaBt"
+                    android:id="@+id/insertBt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -306,8 +306,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="updateCode"
-                    android:text="update"
-                    android:visibility="gone" />
+                    android:text="update" />
 
             </LinearLayout>
 
@@ -340,63 +339,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:inputType="textMultiLine|textPersonName"
-                        android:visibility="gone"
                         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
                 </LinearLayout>
             </HorizontalScrollView>
-
-            <LinearLayout
-                android:id="@+id/commentLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingTop="20dp">
-
-                <TextView
-                    android:id="@+id/codesQuest"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Question CodeName" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/questEt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:hint="Ask a question"
-                        android:inputType="textPersonName"
-                        android:minHeight="48dp" />
-
-                    <Button
-                        android:id="@+id/postBt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/green"
-                        android:onClick="postQuestHandler"
-
-                        android:text="Post"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/questionRv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
 
 
         </LinearLayout>
