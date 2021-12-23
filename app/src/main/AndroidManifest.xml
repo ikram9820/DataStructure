@@ -11,45 +11,45 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DataStructure">
         <activity
-            android:name=".account.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:label="Login"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".account.SignUpActivity"
+            android:name=".activities.SignUpActivity"
             android:label="Sign Up"
-            android:parentActivityName=".account.LoginActivity"
+            android:parentActivityName=".activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".account.ProfileActivity"
+            android:name=".activities.ProfileActivity"
             android:exported="false"
             android:label="Profile"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".GraphActivity"
+            android:name=".activities.GraphActivity"
             android:label="Graph"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".TreeActivity"
+            android:name=".activities.TreeActivity"
             android:label="Tree"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".LinkedListActivity"
+            android:name=".activities.LinkedListActivity"
             android:label="LinkedList"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".QueueActivity"
+            android:name=".activities.QueueActivity"
             android:label="Queue"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".StackActivity"
+            android:name=".activities.StackActivity"
             android:label="Stack"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".ArrayActivity"
+            android:name=".activities.ArrayActivity"
             android:label="Array"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".MainActivity">
+            android:parentActivityName=".activities.MainActivity" />
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

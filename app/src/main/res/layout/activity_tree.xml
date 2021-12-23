@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="5dp"
-    tools:context="ik.tech.datastructure.TreeActivity">
+    tools:context="ik.tech.datastructure.activities.TreeActivity">
+
     <ScrollView
         android:layout_width="match_parent"
 
@@ -24,48 +25,70 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/treeInsertBt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
+                <TextView
+                    android:id="@+id/algoTv"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:onClick="algoHandler"
+                    android:text="ALGO"
+                    android:textColor="@color/blue"
+                    android:textSize="18sp"
 
-                    android:onClick="insertHandler"
-                    app:srcCompat="@drawable/insert"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
 
-                <ImageButton
-                    android:id="@+id/deleteBt"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:onClick="deleteHandler"
-                    app:srcCompat="@drawable/delete"
-                    tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
-
-                <ImageButton
-                    android:id="@+id/serchBt"
-
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/cppTv"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:onClick="searchHandler"
+                    android:gravity="center"
+                    android:onClick="cppCodeHandler"
+                    android:text="C++"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
 
-                    app:srcCompat="@drawable/search"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <TextView
+                    android:id="@+id/javaTv"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="javaCodeHandler"
+                    android:text="JAVA"
+                    android:textColor="#000000"
+
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <TextView
+                    android:id="@+id/pythonTv"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="pythonCodeHandler"
+                    android:text="PYTHON"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -73,145 +96,44 @@
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
                     android:gravity="center"
-                    android:text="insert"
+                    android:onClick="insertHandler"
+                    android:text="Insert"
                     android:textColor="@color/blue"
-                    android:textSize="16sp" />
+                    android:textSize="18sp"
+
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
 
                 <TextView
                     android:id="@+id/deleteTv"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-
                     android:gravity="center"
-                    android:text="delete"
+                    android:onClick="deleteHandler"
+                    android:text="Delete"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="18sp"
+
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
 
                 <TextView
                     android:id="@+id/searchTv"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
                     android:gravity="center"
-                    android:text="search"
+                    android:onClick="searchHandler"
+                    android:text="Search"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/dataEt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="enter data"
-                    android:inputType="number"
-                    android:minHeight="48dp" />
-
-                <Button
-                    android:id="@+id/enterBt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/green"
-                    android:onClick="enterDataHandler"
-
-                    android:text="enter"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-
-                android:layout_weight="1"
-                android:text="Output"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-
-            <TextView
-                android:id="@+id/outputTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/text_bg"
-                android:paddingTop="20dp"
-                android:text="...."
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/insertBt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/white"
-                    android:onClick="javaCodeHandler"
-                    android:text="JAVA"
-
-                    android:textColor="@color/blue"
-
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/cBt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/white"
-                    android:onClick="cCodeHandler"
-
-                    android:text="C++"
-
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/pythonBt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/white"
-                    android:onClick="pythonCodeHandler"
-                    android:text="Python"
-
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/algoBt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/white"
-                    android:onClick="algoHandler"
-                    android:text="Algo"
-
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -237,7 +159,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="updateCode"
-                    android:text="update" />
+                    android:text="update"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -270,6 +193,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:inputType="textMultiLine|textPersonName"
+                        android:visibility="gone"
                         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
                 </LinearLayout>
             </HorizontalScrollView>
@@ -277,5 +201,4 @@
 
         </LinearLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

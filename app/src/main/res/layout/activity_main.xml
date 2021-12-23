@@ -7,7 +7,7 @@
     android:padding="3dp"
     android:paddingLeft="3dp"
     android:paddingRight="3dp"
-    tools:context="ik.tech.datastructure.MainActivity">
+    tools:context="ik.tech.datastructure.activities.MainActivity">
 
     <ScrollView
         android:layout_width="0dp"
